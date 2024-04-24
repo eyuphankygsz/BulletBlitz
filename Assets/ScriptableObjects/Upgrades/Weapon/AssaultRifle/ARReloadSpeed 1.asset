@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c5d519de01386f479023aa99115fc89, type: 3}
+  m_Name: ARReloadSpeed 1
+  m_EditorClassIdentifier: 
+  UpgradeObjName: AssaultRifle
+  Lister:
+  - Price: 1000
+    Amount: -0.05
+  - Price: 2000
+    Amount: -0.05
+  - Price: 3500
+    Amount: -0.05
+  - Price: 5500
+    Amount: -0.05
+  - Price: 9000
+    Amount: -0.1
+  - Price: 12000
+    Amount: -0.1
+  - Price: 18000
+    Amount: -0.1
+  - Price: 25000
+    Amount: -0.2
+  - Price: 33000
+    Amount: -0.2
+  - Price: 43000
+    Amount: -0.2

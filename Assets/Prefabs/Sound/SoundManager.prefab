@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5144011557180046881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2825364345939618025}
+  - component: {fileID: 7381168387020791312}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2825364345939618025
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5144011557180046881}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 29.348516, y: -17.227276, z: -0.28670228}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7381168387020791312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5144011557180046881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dca1e569f2609c4da5e0e098abdf6b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxDictionary:
+    _sfxLists:
+    - Name: Goat
+      SfxList: {fileID: 296926918289072255, guid: b659a9b7c6c27894a8a0416f529e1ed3, type: 3}
+    - Name: Kid
+      SfxList: {fileID: 627836348639621005, guid: c9f26b89ffeb9c2488d648bbbc8392c7, type: 3}
+    - Name: Crow
+      SfxList: {fileID: 6859302747861528919, guid: edf94befd5622f648b3816023bac5134, type: 3}
+    - Name: Witch
+      SfxList: {fileID: 6859302747861528919, guid: 55a4cdcb5479fe04ba1861a70a453989, type: 3}
+  _playerSfx: {fileID: 1701768952915305573, guid: 352f3194533e4004981afc83d9b11aee, type: 3}
+  _treeSfx: {fileID: 6476240054621240631, guid: c56c38e7f4401a443a4886bddb100516, type: 3}
+  _backgroundMusic: {fileID: 8300000, guid: 71718a6ee3d63d04889093b7ed07f1bf, type: 3}
+  <GameMixer>k__BackingField: {fileID: 24100000, guid: 33a5591cafae72f4bb67d443914a0412, type: 2}

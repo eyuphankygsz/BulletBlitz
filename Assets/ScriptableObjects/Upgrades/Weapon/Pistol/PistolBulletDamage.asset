@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c5d519de01386f479023aa99115fc89, type: 3}
+  m_Name: PistolBulletDamage
+  m_EditorClassIdentifier: 
+  UpgradeObjName: Pistol
+  Lister:
+  - Price: 30
+    FloatAmount: 0
+    IntAmount: 1
+    StringValue: 
+  - Price: 60
+    FloatAmount: 0
+    IntAmount: 1
+    StringValue: 
+  - Price: 150
+    FloatAmount: 0
+    IntAmount: 1
+    StringValue: 
+  - Price: 500
+    FloatAmount: 0
+    IntAmount: 1
+    StringValue: 
+  - Price: 1000
+    FloatAmount: 0
+    IntAmount: 1
+    StringValue: 
+  - Price: 1500
+    FloatAmount: 0
+    IntAmount: 1
+    StringValue: 
+  - Price: 2400
+    FloatAmount: 0
+    IntAmount: 2
+    StringValue: 
+  - Price: 3800
+    FloatAmount: 0
+    IntAmount: 2
+    StringValue: 
+  - Price: 6000
+    FloatAmount: 0
+    IntAmount: 1
+    StringValue: 
+  - Price: 7000
+    FloatAmount: 0
+    IntAmount: 1
+    StringValue: 
+  - Price: 8000
+    FloatAmount: 0
+    IntAmount: 1
+    StringValue: 
+  - Price: 15000
+    FloatAmount: 0
+    IntAmount: 5
+    StringValue: 
