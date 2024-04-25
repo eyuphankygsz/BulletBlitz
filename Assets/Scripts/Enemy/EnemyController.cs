@@ -118,27 +118,29 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] Transform _enemyCheckTransform;
     [SerializeField] Vector2 _enemyCheckSize;
+    [SerializeField] Vector2 _seenRange;
 
     public Transform LookPoint { get { return _lookPoint; } }
     [SerializeField] Transform _lookPoint;
     public float LookOffset { get { return _lookOffset; } }
     [SerializeField] float _lookOffset;
 
-    bool _canTrackPlayer = true;
+    private bool _canTrackPlayer = true;
     public bool CanTrackPlayer { get { return _canTrackPlayer; } }//set { _canTrackPlayer = value; } }
 
-    bool _isArrivedToDestination = false;
+    private bool _isArrivedToDestination = false;
     public bool IsArrivedToDestination { get { return _isArrivedToDestination; } }// set { _isArrivedToDestination = value; } }
 
-    bool _isTracking;
+    private bool _isTracking;
     public bool IsTracking { get { return _isTracking; } }// set { _isTracking = value; } }
 
-    RaycastHit2D[] _raycastHits = new RaycastHit2D[10];
+    private RaycastHit2D[] _raycastHits = new RaycastHit2D[10];
 
+    private bool _seen;
     //--------------------
 
     //-------- Attack ---------
-    bool _canAttack = false;
+    private bool _canAttack = false;
     public bool CanAttack { get { return _canAttack; } set { _canAttack = value; } }
 
 
@@ -153,7 +155,7 @@ public class EnemyController : MonoBehaviour
     //------------------------
 
     //-------- Health ---------
-    float _health;
+    private float _health;
     public bool Invulnerable { get; private set; }
     //-------------------------
     //-------- Map Control --------
@@ -280,6 +282,11 @@ public class EnemyController : MonoBehaviour
     {
         return Mathf.Abs(Vector2.Distance(transform.position, _player.position));
     }
+    public bool HasSeenPlayer()
+    {
+        int hits = Physics2D.BoxCastNonAlloc(_enemyCheckTransform.position, _seenRange, 0, Vector2.down, _raycastHits, 0, GameManager.Instance.PlayerLayer);
+        return (hits > 0) || _seen;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Hit(collision);
@@ -298,6 +305,7 @@ public class EnemyController : MonoBehaviour
     {
         if (CanHit(collision))
         {
+            _seen = true;
             _hitCooldownTimer = _defaultHitCooldownTime;
             _colorTime = _hitCooldownTimer - 0.1f;
             _isHitCooldownActive = true;
@@ -447,7 +455,10 @@ public class EnemyController : MonoBehaviour
             Gizmos.DrawWireSphere(_attackPoint.position, _attackRadius);
         Gizmos.color = Color.black;
         if (_enemyCheckTransform != null)
+        {
             Gizmos.DrawWireCube(_enemyCheckTransform.position, _enemyCheckSize);
+            Gizmos.DrawWireCube(_enemyCheckTransform.position, _seenRange);
+        }
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, FOV);

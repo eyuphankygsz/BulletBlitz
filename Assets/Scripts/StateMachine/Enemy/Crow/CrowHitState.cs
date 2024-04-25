@@ -18,6 +18,7 @@ public class CrowHitState : EnemyBaseState
         if (_isHit)
             return;
         EnemySoundHolder.Instance.PlayAudio(EnemySoundHolder.Instance.EnemySFXDictionary["Crow"].Clips["Hit"], false);
+        _controller.CurrentState = _currentState;
         _isHit = true;
         _backToIdleTimer = _defaultBackToIdleTime;
 

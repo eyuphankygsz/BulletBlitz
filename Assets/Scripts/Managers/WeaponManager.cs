@@ -26,8 +26,7 @@ public class WeaponManager : MonoBehaviour
     }
     public static void Setup(AutoShooter shooter)
     {
-        instance.SetWeapons();
-        shooter.SetWeapon(instance.SelectWeapon());
+        instance.SetWeapons(shooter);
     }
     public static void Setup(Transform weaponsParent)
     {
@@ -40,7 +39,7 @@ public class WeaponManager : MonoBehaviour
 
     }
 
-    private void SetWeapons()
+    private void SetWeapons(AutoShooter shooter)
     {
         _playerWeaponParent = GameManager.Instance.Player.GetComponent<PlayerController>().WeaponParent;
         _weaponDictionary.Clear();
@@ -51,10 +50,13 @@ public class WeaponManager : MonoBehaviour
             _weaponDictionary.Add(weaponArray.GetChild(i).name, weaponArray.GetChild(i).gameObject);
             weaponArray.GetChild(i).gameObject.SetActive(false);
         }
+
+        shooter.SetWeapon(SelectWeapon());
     }
     private Weapon SelectWeapon()
     {
         string currentWeapon = PlayerPrefs.GetString("CurrentWeapon");
+        Debug.Log(currentWeapon);
         _weaponDictionary[currentWeapon].SetActive(true);
         return _weaponDictionary[currentWeapon].GetComponent<Weapon>();
     }

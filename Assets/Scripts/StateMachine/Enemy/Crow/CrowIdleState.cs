@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class CrowIdleState : EnemyBaseState
 {
-    EnemyController.States _currentState = EnemyController.States.Idle;
+    private EnemyController.States _currentState = EnemyController.States.Idle;
 
-    CrowBehavior _behavior;
-    EnemyStateManager _stateManager;
+    private CrowBehavior _behavior;
+    private EnemyStateManager _stateManager;
 
-    float _attackTimer, _defaultAttackTimer;
+    private float _attackTimer, _defaultAttackTimer;
+    private bool _seen;
 
     public CrowIdleState(EnemyController controller) : base(controller) { }
 
@@ -37,6 +38,12 @@ public class CrowIdleState : EnemyBaseState
 
     public override void Update()
     {
+        if (!_seen)
+        {
+            _seen = _controller.HasSeenPlayer();
+            return;
+        }
+
         _controller.RB.velocity = Vector2.zero;
         _attackTimer -= Time.deltaTime;
 

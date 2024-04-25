@@ -10,6 +10,7 @@ public class EnemyStateManager : MonoBehaviour
         if (_currentState != null)
             _currentState.ExitState();
         _currentState = state;
+        Debug.Log(state);
         _currentState.EnterState(this);
     }
 

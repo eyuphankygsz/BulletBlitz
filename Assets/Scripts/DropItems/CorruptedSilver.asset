@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 089b5fbff27b77e4fb9e2120e4a504f7, type: 3}
-  m_Name: BadSoul-1-15
+  m_Name: CorruptedSilver
   m_EditorClassIdentifier: 
   DroppedItem: {fileID: 790981714217632497, guid: e7fa880e05d08ac4a84a207188c945c8, type: 3}
-  MinQuantity: 1
-  MaxQuantity: 1
-  Luck: 15
+  MinQuantity: 5
+  MaxQuantity: 15
+  Luck: 100

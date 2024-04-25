@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LittleCrow
   m_EditorClassIdentifier: 
   Health: 12
-  Speed: 3
+  Speed: 2
   ReMoveDefaultTime: 2
   AttackDefaultTime: 0.2
   AttackDamage: 1

@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> Collectables { get; private set; } = new List<GameObject>();
 
-    private GameObject _portal;
+    private Animator _levelLazer;
 
     public GameObject UpgradeCanvas { get; private set; }
 
@@ -54,10 +54,7 @@ public class GameManager : MonoBehaviour
         _shooter = Player.GetComponent<AutoShooter>();
         _skiller = Player.GetComponent<PlayerSpecialSkill>();
 
-        _portal = GameObject.FindGameObjectWithTag("Portal");
-        if (_portal != null)
-            _portal.SetActive(false);
-
+        _levelLazer = GameObject.FindGameObjectWithTag("LevelLazer").GetComponent<Animator>();
         UpgradeCanvas = GameObject.FindGameObjectWithTag("UpgradeCanvas");
         SetBulletSkills();
     }
@@ -116,7 +113,7 @@ public class GameManager : MonoBehaviour
     }
     void OpenPortal()
     {
-        _portal.SetActive(true);
+        _levelLazer.SetTrigger("Close");
     }
 
     public void AddCollectable(GameObject collectable)
