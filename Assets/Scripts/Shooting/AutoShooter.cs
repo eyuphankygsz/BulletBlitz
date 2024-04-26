@@ -14,7 +14,7 @@ public class AutoShooter : MonoBehaviour
 
     private float _currentShootTimer;
     private bool canAim;
-    
+
     WeaponStat _weaponStat;
     Weapon _weapon;
 
@@ -72,9 +72,12 @@ public class AutoShooter : MonoBehaviour
                 if (newClose < Vector2.Distance(_closestEnemy.position, transform.position))
                     _closestEnemy = _enemies[i].transform;
             }
+        
+        if (Vector2.Distance(_closestEnemy.position, transform.position) > 5f)
+            _closestEnemy = null;
+
         if (_closestEnemy == null)
             return;
-
         Vector3 difference = _closestEnemy.position - _lookPoint.position;
         float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
 
@@ -100,6 +103,11 @@ public class AutoShooter : MonoBehaviour
         _currentShootTimer -= Time.deltaTime;
         if (_currentShootTimer <= 0 && !_isShooting)
         {
+            if (_closestEnemy == null)
+            {
+                _currentShootTimer = WeaponStat.Timer[_currentSkill % _weaponStat.Timer.Length];
+                return;
+            }
             _isShooting = true;
             _weapon._animator.SetTrigger("Shoot");
         }
@@ -135,7 +143,7 @@ public class AutoShooter : MonoBehaviour
 
         for (int i = 0; i < _weaponStat.MaxBullet; i++)
         {
-            _bullets[i] = Instantiate(_bulletPrefab, new Vector3(-100,-100,0), Quaternion.identity);
+            _bullets[i] = Instantiate(_bulletPrefab, new Vector3(-100, -100, 0), Quaternion.identity);
         }
     }
 
