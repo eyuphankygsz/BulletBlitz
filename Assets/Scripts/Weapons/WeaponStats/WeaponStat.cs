@@ -48,6 +48,7 @@ public class WeaponStat : ScriptableObject
 
         MaxBullet = _baseMaxBullet + PlayerPrefs.GetInt(name + "BulletCount" + "Value");
         ReloadTime = _baseReloadTime + PlayerPrefs.GetFloat(name + "ReloadSpeed" + "Value");
+        AdditionalHealth = _baseAdditionalHealth;
     }
 
 }

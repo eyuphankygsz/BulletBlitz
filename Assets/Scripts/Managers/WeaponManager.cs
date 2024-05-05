@@ -23,6 +23,9 @@ public class WeaponManager : MonoBehaviour
         }
         if (!PlayerPrefs.HasKey("CurrentWeapon"))
             PlayerPrefs.SetString("CurrentWeapon", "Pistol");
+
+        for (int i = 0; i < _weapons.Length; i++)
+            _weapons[i].SetupGun();
     }
     public static void Setup(AutoShooter shooter)
     {

@@ -50,4 +50,13 @@ MonoBehaviour:
   <EnemyLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
+  <WallLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 1024
+  <CollectableLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 2048
+  <TrapsLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 8192
   _enemies: []

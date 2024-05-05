@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool _joystickControl;
     FixedJoystick _joystick;
 
+    private Interactable _interactable = null;
+
     //--------------------------------------
 
 
@@ -109,13 +111,12 @@ public class PlayerController : MonoBehaviour
 
     private RaycastHit2D[] _groundHit = new RaycastHit2D[1];
     private RaycastHit2D[] _wallHit = new RaycastHit2D[1];
-    private RaycastHit2D[] _enemyHit = new RaycastHit2D[10];
+    private RaycastHit2D[] _collectableHits = new RaycastHit2D[10];
 
     [SerializeField] public GameObject WeaponParent;
 
     private void Awake()
     {
-        SetStats();
         SetScripts();
         SetStates();
     }
@@ -219,10 +220,23 @@ public class PlayerController : MonoBehaviour
     }
     private void CheckHits()
     {
-        int enemyHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _enemyHit, 0, GameManager.Instance.EnemyLayer | GameManager.Instance.CollectableLayer);
-        if (enemyHits > 0)
-            for (int i = 0; i < enemyHits; i++)
-                Hit(_enemyHit[i].collider);
+        int collectableHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.CollectableLayer);
+        for (int i = 0; i < collectableHits; i++)
+            Hit(_collectableHits[i].collider);
+
+        int trapHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.TrapsLayer);
+        if (trapHits == 1)
+            _collectableHits[0].collider.GetComponent<TrapsBase>().OnCollide(gameObject);
+
+        int interactableHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.InteractableLayer);
+        if (interactableHits > 0)
+        {
+            for (int i = 0; i < interactableHits; i++)
+                _collectableHits[i].collider.GetComponent<Interactable>().OnTrigger(out _interactable);
+            PanelManager.Instance.InteractButton.gameObject.SetActive(true);
+        }
+        else
+            PanelManager.Instance.InteractButton.gameObject.SetActive(false);
 
     }
     public void HitWithDamage(int damage, GameObject attacker)
@@ -346,14 +360,23 @@ public class PlayerController : MonoBehaviour
         if (trigger.triggers.Count > 0)
             trigger.triggers.Clear();
 
-
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerDown;
         entry.callback.AddListener((eventdata) => { TryToJump(); });
         trigger.triggers.Add(entry);
 
+        //------------------------------------------
+        trigger = PanelManager.Instance.InteractButton;
+        if (trigger.triggers.Count > 0)
+            trigger.triggers.Clear();
+
+        entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+        entry.callback.AddListener((eventdata) => { Interact(); });
+        trigger.triggers.Add(entry);
+
     }
-    private void SetStats()
+    public void SetStats()
     {
         _healthUI = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Image>();
         _maxHealth = 5 + _autoShooter.WeaponStat.AdditionalHealth;
@@ -372,6 +395,12 @@ public class PlayerController : MonoBehaviour
             _playerStateManager.SwitchState(JumpRootState);
             return;
         }
+    }
+    public void Interact()
+    {
+        if (_interactable == null)
+            return;
+        _interactable.OnEnabled();
     }
     private void OnDrawGizmos()
     {

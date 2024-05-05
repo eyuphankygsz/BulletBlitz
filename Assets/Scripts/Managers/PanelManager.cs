@@ -10,6 +10,7 @@ public class PanelManager : MonoBehaviour
     [SerializeField] private GameObject[] _panels;
     [SerializeField] private Button[] _buttons;
     [field: SerializeField] public EventTrigger JumpButton { get; private set; }
+    [field: SerializeField] public EventTrigger InteractButton { get; private set; }
     [field: SerializeField] public EventTrigger SpecialButton { get; private set; }
     [field: SerializeField] public FixedJoystick Joystick { get; private set; }
     void Awake()

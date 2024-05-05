@@ -40,6 +40,8 @@ public class AutoShooter : MonoBehaviour
         _currentShootTimer = _weaponStat.Timer[0];
 
         CreateBullets();
+        Debug.Log(WeaponStat);
+        _controller.SetStats();
     }
 
     // Update is called once per frame

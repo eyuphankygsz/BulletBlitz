@@ -18,7 +18,7 @@ MonoBehaviour:
   - 3
   Damage: 05000000
   Timer:
-  - 3.05
+  - 3
   MaxBullet: 7
   AdditionalHealth: 0
   ReloadTime: 2
