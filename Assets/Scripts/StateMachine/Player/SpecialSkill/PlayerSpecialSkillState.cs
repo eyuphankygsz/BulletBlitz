@@ -1,10 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSpecialSkillState : PlayerBaseState
 {
-    public PlayerSpecialSkillState(PlayerController controller) : base(controller) { }
+    private PlayerController _controller;
+
+    private void Awake()
+    {
+        _controller = GetComponent<PlayerController>();
+    }
 
     PlayerController.States _stateEnum = PlayerController.States.Special;
 
@@ -19,9 +22,13 @@ public class PlayerSpecialSkillState : PlayerBaseState
         _timer = _maxTime;
         GameManager.Instance.SpecialSkill = true;
     }
-    public override void Update()
+    public override void StateUpdate()
     {
         MovePlayer();
+    }
+    public override void StateFixedUpdate()
+    {
+
     }
 
     void MovePlayer()

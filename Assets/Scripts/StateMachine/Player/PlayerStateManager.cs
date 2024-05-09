@@ -14,7 +14,12 @@ public class PlayerStateManager : MonoBehaviour
     private void Update()
     {
         if (_currentState != null || !_controller.Dead)
-            _currentState.Update();
+            _currentState.StateUpdate();
+    }
+    private void FixedUpdate()
+    {
+        if (_currentState != null || !_controller.Dead)
+            _currentState.StateFixedUpdate();
     }
 
     public void SwitchState(PlayerBaseState state)

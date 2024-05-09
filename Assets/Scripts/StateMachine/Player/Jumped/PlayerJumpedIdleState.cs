@@ -2,16 +2,23 @@ using UnityEngine;
 
 public class PlayerJumpedIdleState : PlayerJumpedState
 {
-    public PlayerJumpedIdleState(PlayerController controller) : base(controller){}
+    private PlayerController _controller;
+
+    private void Awake()
+    {
+        _controller = GetComponent<PlayerController>();
+    }
 
     public override void EnterState(PlayerStateManager player)
     {
-
-        //_controller._jumpedRootState.EnterState(player);
     }
-    public override void Update()
+    public override void StateUpdate()
     {
-        _controller.JumpRootState.Update();
+        _controller.JumpRootState.StateUpdate();
+    }
+    public override void StateFixedUpdate()
+    {
+        _controller.JumpRootState.StateFixedUpdate();
     }
     public override void ExitState()
     {

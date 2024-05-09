@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     FixedJoystick _joystick;
 
     private Interactable _interactable = null;
+    private Interactable _holdingObject = null;
+    [SerializeField] private Transform _holdPoint;
 
     //--------------------------------------
 
@@ -36,12 +38,10 @@ public class PlayerController : MonoBehaviour
     private bool _sloope;
     public bool IsGroundSloope { get { return _sloope; } }
 
-    private bool _canCheckGround = true;
-    public bool CanCheckGround { get { return _canCheckGround; } }
+    public bool CanCheckGround = true;
+
     private float _groundCheckCounter;
     private bool _isGroundCheckCounting;
-
-    public bool IsJumping { get; set; } = false;
     [SerializeField] private LayerMask _groundLayerMask;
     [SerializeField] private Transform _groundCheckTranform;
     [SerializeField] private Vector2 _groundCheckSize;
@@ -133,15 +133,13 @@ public class PlayerController : MonoBehaviour
             return;
 
         _autoShooter.UpdateShooter();
-        CheckGroundCountdown();
         HitCooldownCountdown();
-        SetYDirection();
         CheckHits();
     }
 
     public bool IsOnGround()
     {
-        if (IsJumping) return false;
+        if (!CanCheckGround) return false;
 
         int hits = Physics2D.BoxCastNonAlloc(_groundCheckTranform.position, _groundCheckSize, 0, Vector2.down, _groundHit, 0, _groundLayerMask);
         if (hits > 0)
@@ -179,11 +177,6 @@ public class PlayerController : MonoBehaviour
         return Input.GetAxisRaw("Horizontal");
     }
 
-    private void SetYDirection()
-    {
-        YDirection = (transform.position.y - _oldY >= 0) ? 1 : -1;
-        _oldY = transform.position.y;
-    }
     public bool TryToChangeState(PlayerBaseState state, States currentStateEnum)
     {
         if (CurrentState == currentStateEnum)
@@ -228,15 +221,28 @@ public class PlayerController : MonoBehaviour
         if (trapHits == 1)
             _collectableHits[0].collider.GetComponent<TrapsBase>().OnCollide(gameObject);
 
-        int interactableHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.InteractableLayer);
-        if (interactableHits > 0)
+        if (_holdingObject == null)
         {
-            for (int i = 0; i < interactableHits; i++)
-                _collectableHits[i].collider.GetComponent<Interactable>().OnTrigger(out _interactable);
-            PanelManager.Instance.InteractButton.gameObject.SetActive(true);
+            int interactableHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.InteractableLayer);
+            if (interactableHits > 0)
+            {
+                int closestId = 0;
+                float closestDistance = 100;
+                for (int i = 0; i < interactableHits; i++)
+                {
+                    float dist = Vector3.Distance(transform.position, _collectableHits[i].transform.position);
+                    if (dist < closestDistance)
+                    {
+                        closestId = i;
+                        closestDistance = dist;
+                    }
+                }
+                _collectableHits[closestId].collider.GetComponent<Interactable>().OnTrigger(out _interactable);
+                PanelManager.Instance.InteractButton.gameObject.SetActive(true);
+            }
+            else
+                PanelManager.Instance.InteractButton.gameObject.SetActive(false);
         }
-        else
-            PanelManager.Instance.InteractButton.gameObject.SetActive(false);
 
     }
     public void HitWithDamage(int damage, GameObject attacker)
@@ -287,25 +293,6 @@ public class PlayerController : MonoBehaviour
         HitObject = collision;
         return true;
     }
-    public void StartGroundCheckCountdown(float defaultTime)
-    {
-        _canCheckGround = false;
-        _groundCheckCounter = defaultTime;
-        _isGroundCheckCounting = true;
-    }
-    void CheckGroundCountdown()
-    {
-        if (_isGroundCheckCounting)
-        {
-            _groundCheckCounter -= Time.deltaTime;
-            if (_groundCheckCounter <= 0)
-            {
-                _groundCheckCounter = 0;
-                _isGroundCheckCounting = false;
-                _canCheckGround = true;
-            }
-        }
-    }
 
     void HitCooldownCountdown()
     {
@@ -342,15 +329,15 @@ public class PlayerController : MonoBehaviour
     }
     void SetStates()
     {
-        GroundRootState = new PlayerGroundState(this);
-        JumpRootState = new PlayerJumpedState(this);
-        GroundIdleState = new PlayerGroundIdleState(this);
-        GroundWalkState = new PlayerGroundWalkState(this);
-        JumpIdleState = new PlayerJumpedIdleState(this);
-        JumpWalkState = new PlayerJumpedWalkState(this);
-        HitRootState = new PlayerHitState(this);
-        DeadRootState = new PlayerDeadState(this);
-        SpecialSkillState = new PlayerSpecialSkillState(this);
+        GroundRootState = gameObject.AddComponent<PlayerGroundState>();
+        JumpRootState = gameObject.AddComponent<PlayerJumpedState>();
+        GroundIdleState = gameObject.AddComponent<PlayerGroundIdleState>();
+        GroundWalkState = gameObject.AddComponent<PlayerGroundWalkState>();
+        JumpIdleState = gameObject.AddComponent<PlayerJumpedIdleState>();
+        JumpWalkState = gameObject.AddComponent<PlayerJumpedWalkState>();
+        HitRootState = gameObject.AddComponent<PlayerHitState>();
+        DeadRootState = gameObject.AddComponent<PlayerDeadState>();
+        SpecialSkillState = gameObject.AddComponent<PlayerSpecialSkillState>();
     }
     private void SetButtons()
     {
@@ -401,6 +388,19 @@ public class PlayerController : MonoBehaviour
         if (_interactable == null)
             return;
         _interactable.OnEnabled();
+    }
+    public void HoldObject(Interactable obj)
+    {
+        if (obj != null)
+        {
+            obj.transform.SetParent(_holdPoint);
+            obj.transform.localPosition = Vector3.zero;
+        }
+        else
+        {
+            _holdingObject.transform.SetParent(null);
+        }
+        _holdingObject = obj;
     }
     private void OnDrawGizmos()
     {

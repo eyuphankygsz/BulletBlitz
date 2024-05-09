@@ -1,20 +1,24 @@
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerHitState : PlayerBaseState
 {
-    public PlayerHitState(PlayerController controller) : base(controller) { }
-
 
     PlayerController.States _stateEnum = PlayerController.States.Hit;
     bool _isHitting;
-    float _defaultGroundCheckTime = 0.2f;
-    private JumpStates _hitStates = JumpStates.Jump;
-    private Vector2 _jumpOffset, _jumpMax = new Vector2(0.5f, 0.5f);
-    private float _speed = 3;
+    
+    private float _jumpHeightY = 3, _jumpHeightX = 2;
+    private float _gravity = -9;
+    private float _velocity;
 
-    private Vector3 _oldPos;
     private PlayerStateManager _player;
+
+
+    private PlayerController _controller;
+
+    private void Awake()
+    {
+        _controller = GetComponent<PlayerController>();
+    }
     public override void EnterState(PlayerStateManager player)
     {
         if (_player == null)
@@ -25,26 +29,25 @@ public class PlayerHitState : PlayerBaseState
         else
             _isHitting = true;
 
+        _controller.CanCheckGround = false;
+
         float directionX = _controller.transform.position.x - _controller.HitObject.transform.position.x >= 0 ? 1 : -1;
-        _jumpOffset = _controller.transform.position + new Vector3(_jumpMax.x * Mathf.Sign(directionX), _jumpMax.y);
-        _oldPos = Vector3.zero;
 
         Debug.Log(_jumpOffset);
         _hitStates = JumpStates.Jump;
         EnemySoundHolder.Instance.PlayAudio(EnemySoundHolder.Instance.PlayerSFX.Clips["Hit"], false);
 
         _controller.CurrentState = _stateEnum;
-        _controller.IsJumping = true;
+        _controller.CanCheckGround = false;
 
 
         if (_controller.HitObject.tag == "Bullet")
             _controller.HitObject.gameObject.SetActive(false);
 
-        _controller.StartGroundCheckCountdown(_defaultGroundCheckTime);
         _controller.Animator.SetTrigger("HitTrigger");
         Hit(player);
     }
-    public override void Update()
+    public override void StateUpdate()
     {
         switch (_hitStates)
         {
@@ -55,10 +58,12 @@ public class PlayerHitState : PlayerBaseState
                 Fall();
                 break;
         }
-        CheckGround();
-        _controller.IsJumping = false;
+        _controller.CanCheckGround = false;
     }
-
+    public override void StateFixedUpdate()
+    {
+        CheckGround();
+    }
     private void Jump()
     {
         if (Vector2.Distance(_controller.transform.position, _jumpOffset) < 0.1f || _controller.transform.position == _oldPos)
@@ -73,8 +78,8 @@ public class PlayerHitState : PlayerBaseState
                 newDirection.x = 0;
 
             Debug.Log(newDirection);
-            _controller.transform.Translate(((Vector2.right * newDirection.x * _speed) +
-                 (Vector2.up * newDirection.y * _speed)) * Time.deltaTime);
+            _controller.transform.Translate(((Vector2.right * newDirection.x * _speedHeight) +
+                 (Vector2.up * newDirection.y * _speedHeight)) * Time.deltaTime);
         }
     }
     private void Fall()
@@ -82,7 +87,7 @@ public class PlayerHitState : PlayerBaseState
         if (_controller.IsOnGround())
             _hitStates = JumpStates.Done;
         else
-            _controller.transform.Translate(Vector2.down * _speed * Time.deltaTime);
+            _controller.transform.Translate(Vector2.down * _speedHeight * Time.deltaTime);
     }
     void Hit(PlayerStateManager player)
     {

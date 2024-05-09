@@ -1,20 +1,26 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerJumpedState : PlayerBaseState
 {
-    public PlayerJumpedState(PlayerController controller) : base(controller) { }
+    private PlayerController _controller;
 
-    bool _canDoubleJump = false;
-    bool _isJumpedOnce = false;
-    bool _isJumpedTwice = false;
+    private void Awake()
+    {
+        _controller = GetComponent<PlayerController>();
+    }
 
-    bool _isJumping = false;
+    private bool _canDoubleJump = false;
+    private bool _isJumpedOnce = false;
+    private bool _isJumpedTwice = false;
 
-    private JumpStates _jumpStates = JumpStates.Jump;
-    private float _jumpOffset;
-    private float _speed = 6;
-    private float _multiplier = 3;
+    private bool _isJumping = false;
+    private int _yDirection;
+
+    private float _jumpHeight = 4;
+    private float _velocity;
+    private float _gravity = -9;
+
     bool IsMoving() { return _controller.GetAxis() != 0; }
 
     PlayerController.States _stateEnum = PlayerController.States.Jump;
@@ -32,18 +38,15 @@ public class PlayerJumpedState : PlayerBaseState
         if (_isJumping || (_isJumpedOnce && !_canDoubleJump) || (_canDoubleJump && _isJumpedTwice))
             return;
 
-        _multiplier = 3;
+        _velocity = _jumpHeight;
+
         _isJumpedOnce = false;
         _isJumpedTwice = false;
-
         _controller.Animator.SetBool("OnGround", false);
 
         _controller.Animator.SetTrigger("JumpTrigger");
         _controller.CurrentState = _stateEnum;
-        _controller.IsJumping = true;
-
-        _jumpStates = JumpStates.Jump;
-        _jumpOffset = _controller.transform.position.y + 1.5f;
+        _controller.CanCheckGround = false;
 
         EnemySoundHolder.Instance.PlayAudio(EnemySoundHolder.Instance.PlayerSFX.Clips["Jump"], false);
         _canDoubleJump = PlayerPrefs.GetInt("DoubleJump") == 1 ? true : false;
@@ -53,61 +56,37 @@ public class PlayerJumpedState : PlayerBaseState
         _isJumpedOnce = true;
 
 
-    }
-    public override void Update()
-    {
 
-        switch (_jumpStates)
-        {
-            case JumpStates.Jump:
-                Jump();
-                break;
-            case JumpStates.Fall:
-                Fall();
-                break;
-        }
+    }
+    public override void StateUpdate()
+    {
+        UpdatePosition();
+
 
         if (_controller.TryToChangeState(NewState(), _stateEnum))
             return;
-        _controller.IsJumping = false;
-        _controller.Animator.SetFloat("Jump", _controller.YDirection, 0.1f, Time.deltaTime);
-
+        _controller.Animator.SetFloat("Jump", _yDirection, 0.1f, Time.deltaTime);
+    }
+    public override void StateFixedUpdate()
+    {
         if (_controller.IsOnGround())
             _controller.TryToChangeState(_controller.GroundRootState, _stateEnum);
-
     }
-
-    PlayerBaseState NewState()
+    private void UpdatePosition()
+    {
+        _velocity += _gravity * Time.deltaTime;
+        if (!_controller.CanCheckGround && _velocity <= 0)
+            _controller.CanCheckGround = true;
+        Vector3 direction = new Vector3(0, _velocity, 0) * Time.deltaTime;
+        _yDirection = (int)Mathf.Sign(direction.y);
+        _controller.transform.Translate(direction);
+    }
+    private PlayerBaseState NewState()
     {
         if (IsMoving())
             return _controller.JumpWalkState;
 
         return _controller.JumpIdleState;
-    }
-
-    private void Jump()
-    {
-        if (_jumpOffset - _controller.transform.position.y < 0.1f)
-        {
-            _jumpStates = JumpStates.Fall;
-        }
-        else
-        {
-            float jumpForce = Mathf.Sqrt(6 * _speed * _multiplier);
-            _controller.transform.Translate(Vector2.up * jumpForce * Time.deltaTime);
-            if(_controller.transform.position.y > _jumpOffset)
-                _controller.transform.position = new Vector3(_controller.transform.position.x, _jumpOffset,_controller.transform.position.z);
-            _multiplier -= 15 * Time.deltaTime;
-            if (_multiplier < 0) _multiplier = 0;
-        }
-
-    }
-    private void Fall()
-    {
-        float jumpForce = Mathf.Sqrt(6 * _speed * _multiplier);
-        _controller.transform.Translate(Vector2.down * jumpForce * Time.deltaTime);
-        _multiplier += 8 * Time.deltaTime;
-        if (_multiplier > 3) _multiplier = 3;
     }
 
     public override void ExitState()

@@ -2,17 +2,28 @@ using UnityEngine;
 
 public class PlayerGroundWalkState : PlayerGroundState
 {
-    public PlayerGroundWalkState(PlayerController controller) : base(controller) { }
+    private PlayerController _controller;
 
-    public override void Update()
+    private void Awake()
+    {
+        _controller = GetComponent<PlayerController>();
+    }
+
+    public override void StateUpdate()
     {
         if (_controller.GetAxis() != 0)
             _controller.Animator.SetFloat("MoveSpeed", 1);
 
         Move();
 
-        _controller.GroundRootState.Update();
+        _controller.GroundRootState.StateUpdate();
     }
+
+    public override void StateFixedUpdate()
+    {
+        _controller.GroundRootState.StateFixedUpdate();
+    }
+
     private void Move()
     {
         float direction = _controller.GetAxis();

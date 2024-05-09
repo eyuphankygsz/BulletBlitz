@@ -3,29 +3,38 @@ using UnityEngine;
 public class PlayerGroundState : PlayerBaseState
 {
 
-    public PlayerGroundState(PlayerController controller) : base(controller) { }
-
     PlayerController.States _stateEnum = PlayerController.States.Ground;
     protected float _speed = 3;
 
     protected PlayerStateManager _player;
+    private PlayerController _controller;
 
+    private void Awake()
+    {
+        _controller = GetComponent<PlayerController>();
+        Debug.Log("AWAKE:" + _controller);
+    }
     public override void EnterState(PlayerStateManager player)
     {
-        if(_player == null)
+        if (_player == null)
             _player = player;
 
         _controller.CurrentState = _stateEnum;
-        _controller.Animator.SetBool("OnGround",true);
+        _controller.Animator.SetBool("OnGround", true);
 
     }
 
-    public override void Update()
+    public override void StateUpdate()
     {
+        Debug.Log("UPDATE:" + _controller);
         _controller.TryToChangeState(NewState(), _stateEnum);
-        CheckGround();
     }
+    public override void StateFixedUpdate()
+    {
+        Debug.Log("FIXEDUPDATE:" + _controller);
+        CheckGround();
 
+    }
 
     PlayerBaseState NewState()
     {
@@ -38,12 +47,14 @@ public class PlayerGroundState : PlayerBaseState
 
     void CheckGround()
     {
-        if (!_controller.IsOnGround())
+        if (_controller != null)
         {
-            _controller.transform.Translate(Vector2.down * _speed * 2 * Time.deltaTime);
+            if (!_controller.IsOnGround())
+                _controller.transform.Translate(Vector2.down * _speed * 2 * Time.deltaTime);
+            if (Input.GetKeyDown(KeyCode.Space))
+                _controller.TryToJump();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-            _controller.TryToJump();
     }
     public override void ExitState() { }
+
 }

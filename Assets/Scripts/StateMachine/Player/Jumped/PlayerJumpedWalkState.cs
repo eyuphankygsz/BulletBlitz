@@ -4,7 +4,13 @@ public class PlayerJumpedWalkState : PlayerJumpedState
 {
     private float _speed = 3;
     bool _initialized;
-    public PlayerJumpedWalkState(PlayerController controller) : base(controller){}
+    
+    private PlayerController _controller;
+
+    private void Awake()
+    {
+        _controller = GetComponent<PlayerController>();
+    }
 
     public override void EnterState(PlayerStateManager player) { if (!_initialized) SetStats(); }
     void SetStats()
@@ -14,11 +20,15 @@ public class PlayerJumpedWalkState : PlayerJumpedState
 
         //_speed = PlayerPrefs.GetFloat("Speed_Player");
     }
-    public override void Update()
+    public override void StateUpdate()
     {
         Move();
-        _controller.JumpRootState.Update();
+        _controller.JumpRootState.StateUpdate();
 
+    }
+    public override void StateFixedUpdate()
+    {
+        _controller.JumpRootState.StateFixedUpdate();
     }
     void Move()
     {
