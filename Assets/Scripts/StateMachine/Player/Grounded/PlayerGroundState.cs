@@ -12,7 +12,6 @@ public class PlayerGroundState : PlayerBaseState
     private void Awake()
     {
         _controller = GetComponent<PlayerController>();
-        Debug.Log("AWAKE:" + _controller);
     }
     public override void EnterState(PlayerStateManager player)
     {
@@ -26,12 +25,10 @@ public class PlayerGroundState : PlayerBaseState
 
     public override void StateUpdate()
     {
-        Debug.Log("UPDATE:" + _controller);
         _controller.TryToChangeState(NewState(), _stateEnum);
     }
     public override void StateFixedUpdate()
     {
-        Debug.Log("FIXEDUPDATE:" + _controller);
         CheckGround();
 
     }

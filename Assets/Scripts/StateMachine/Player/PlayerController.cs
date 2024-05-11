@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     private bool _canMove = true;
     public bool CanMove { get { return _canMove; } set { _canMove = value; } }
 
+    private PlayerJumpController _jumper;
     [SerializeField] AutoShooter _autoShooter;
 
     [SerializeField] SpriteRenderer[] _bodyParts;
@@ -134,6 +135,7 @@ public class PlayerController : MonoBehaviour
 
         _autoShooter.UpdateShooter();
         HitCooldownCountdown();
+        CheckYDirection();
         CheckHits();
     }
 
@@ -152,6 +154,7 @@ public class PlayerController : MonoBehaviour
                 return true;
 
             transform.position = position;
+            _jumper.StopJump();
             return true;
         }
         _sloope = false;
@@ -325,6 +328,7 @@ public class PlayerController : MonoBehaviour
     {
         PlayerCollider = GetComponent<Collider2D>();
         _playerStateManager = GetComponent<PlayerStateManager>();
+        _jumper = GetComponent<PlayerJumpController>();
         Animator = GetComponent<Animator>();
     }
     void SetStates()
@@ -383,6 +387,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
     }
+    public void StartJump(float yStrength, float xStrength, float gravity)
+    {
+        _jumper.StartJump(yStrength, xStrength, gravity);
+    }
     public void Interact()
     {
         if (_interactable == null)
@@ -401,6 +409,10 @@ public class PlayerController : MonoBehaviour
             _holdingObject.transform.SetParent(null);
         }
         _holdingObject = obj;
+    }
+    private void CheckYDirection()
+    {
+        YDirection = Mathf.Sign(transform.position.y - _oldY);
     }
     private void OnDrawGizmos()
     {

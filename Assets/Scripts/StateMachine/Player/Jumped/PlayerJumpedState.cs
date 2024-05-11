@@ -15,10 +15,8 @@ public class PlayerJumpedState : PlayerBaseState
     private bool _isJumpedTwice = false;
 
     private bool _isJumping = false;
-    private int _yDirection;
 
-    private float _jumpHeight = 4;
-    private float _velocity;
+    private float _yVelocity = 4, _xVelocity = 0;
     private float _gravity = -9;
 
     bool IsMoving() { return _controller.GetAxis() != 0; }
@@ -38,13 +36,10 @@ public class PlayerJumpedState : PlayerBaseState
         if (_isJumping || (_isJumpedOnce && !_canDoubleJump) || (_canDoubleJump && _isJumpedTwice))
             return;
 
-        _velocity = _jumpHeight;
-
         _isJumpedOnce = false;
         _isJumpedTwice = false;
         _controller.Animator.SetBool("OnGround", false);
 
-        _controller.Animator.SetTrigger("JumpTrigger");
         _controller.CurrentState = _stateEnum;
         _controller.CanCheckGround = false;
 
@@ -55,31 +50,20 @@ public class PlayerJumpedState : PlayerBaseState
             _isJumpedTwice = true;
         _isJumpedOnce = true;
 
+        _controller.StartJump(_yVelocity, _xVelocity, _gravity);
 
 
     }
     public override void StateUpdate()
     {
-        UpdatePosition();
-
-
         if (_controller.TryToChangeState(NewState(), _stateEnum))
             return;
-        _controller.Animator.SetFloat("Jump", _yDirection, 0.1f, Time.deltaTime);
+        _controller.Animator.SetFloat("Jump", _controller.YDirection, 0.1f, Time.deltaTime);
     }
     public override void StateFixedUpdate()
     {
         if (_controller.IsOnGround())
             _controller.TryToChangeState(_controller.GroundRootState, _stateEnum);
-    }
-    private void UpdatePosition()
-    {
-        _velocity += _gravity * Time.deltaTime;
-        if (!_controller.CanCheckGround && _velocity <= 0)
-            _controller.CanCheckGround = true;
-        Vector3 direction = new Vector3(0, _velocity, 0) * Time.deltaTime;
-        _yDirection = (int)Mathf.Sign(direction.y);
-        _controller.transform.Translate(direction);
     }
     private PlayerBaseState NewState()
     {
