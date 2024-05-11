@@ -59,4 +59,7 @@ MonoBehaviour:
   <TrapsLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 8192
+  <InteractableLayer>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 16384
   _enemies: []
