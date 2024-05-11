@@ -26,10 +26,6 @@ public class PlayerJumpedWalkState : PlayerJumpedState
         _controller.JumpRootState.StateUpdate();
 
     }
-    public override void StateFixedUpdate()
-    {
-        _controller.JumpRootState.StateFixedUpdate();
-    }
     void Move()
     {
         float direction = _controller.GetAxis();

@@ -15,10 +15,8 @@ public class PlayerGroundIdleState : PlayerGroundState
         _controller.Animator.SetFloat("MoveSpeed", 0);
         _controller.GroundRootState.StateUpdate();
     }
-    public override void StateFixedUpdate()
-    {
-        _controller.GroundRootState.StateFixedUpdate();
-    }
+
+
     public override void ExitState()
     {
         _controller.GroundRootState.ExitState();

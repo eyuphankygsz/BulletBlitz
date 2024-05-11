@@ -120,6 +120,7 @@ public class PlayerController : MonoBehaviour
     {
         SetScripts();
         SetStates();
+        IgnoreCollisions();
     }
     void Start()
     {
@@ -342,6 +343,10 @@ public class PlayerController : MonoBehaviour
         HitRootState = gameObject.AddComponent<PlayerHitState>();
         DeadRootState = gameObject.AddComponent<PlayerDeadState>();
         SpecialSkillState = gameObject.AddComponent<PlayerSpecialSkillState>();
+    }
+    void IgnoreCollisions()
+    {
+        Physics2D.IgnoreLayerCollision(Mathf.RoundToInt(Mathf.Log(GameManager.Instance.PlayerLayer.value, 2)), Mathf.RoundToInt(Mathf.Log(GameManager.Instance.InteractableLayer.value, 2)));
     }
     private void SetButtons()
     {

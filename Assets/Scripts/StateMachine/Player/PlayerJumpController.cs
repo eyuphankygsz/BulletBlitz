@@ -43,7 +43,7 @@ public class PlayerJumpController : MonoBehaviour
 
         _velocityY += _gravity * Time.deltaTime;
         if (_velocityX > 0)
-            _velocityX -= _xDirection - Time.deltaTime;
+            _velocityX -= _xDirection * Time.deltaTime;
 
         if ((_velocityY <= 0))
             _controller.CanCheckGround = true;

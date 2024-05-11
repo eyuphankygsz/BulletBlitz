@@ -37,12 +37,11 @@ public class PlayerDeadState : PlayerBaseState
     public override void StateUpdate()
     {
         Dead();
-    }
-    public override void StateFixedUpdate()
-    {
         if(_controller.IsOnGround() && _deadStates == JumpStates.Fall)
             _deadStates = JumpStates.Done;
     }
+
+
     private void Jump()
     {
         if (Vector2.Distance(_player.transform.position, _jumpOffset) < 0.1f)

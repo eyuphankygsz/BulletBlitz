@@ -26,11 +26,7 @@ public class PlayerGroundState : PlayerBaseState
     public override void StateUpdate()
     {
         _controller.TryToChangeState(NewState(), _stateEnum);
-    }
-    public override void StateFixedUpdate()
-    {
         CheckGround();
-
     }
 
     PlayerBaseState NewState()

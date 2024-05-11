@@ -26,10 +26,6 @@ public class PlayerSpecialSkillState : PlayerBaseState
     {
         MovePlayer();
     }
-    public override void StateFixedUpdate()
-    {
-
-    }
 
     void MovePlayer()
     {

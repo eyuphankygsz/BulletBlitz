@@ -30,7 +30,6 @@ public class PlayerHitState : PlayerBaseState
 
         _controller.CanCheckGround = false;
 
-        float directionX = _controller.transform.position.x - _controller.HitObject.transform.position.x >= 0 ? 1 : -1;
 
         EnemySoundHolder.Instance.PlayAudio(EnemySoundHolder.Instance.PlayerSFX.Clips["Hit"], false);
 
@@ -43,14 +42,9 @@ public class PlayerHitState : PlayerBaseState
 
         _controller.Animator.SetTrigger("HitTrigger");
 
-        _controller.StartJump(_yVelocity, _xVelocity, _gravity);
+        float directionX = _controller.transform.position.x - _controller.HitObject.transform.position.x >= 0 ? 1 : -1;
+        _controller.StartJump(_yVelocity, _xVelocity * directionX, _gravity);
     }
-
-    public override void StateFixedUpdate()
-    {
-        CheckGround();
-    }
-
 
     void CheckGround()
     {
@@ -64,6 +58,6 @@ public class PlayerHitState : PlayerBaseState
 
     public override void StateUpdate()
     {
-
+        CheckGround();
     }
 }

@@ -19,11 +19,6 @@ public class PlayerGroundWalkState : PlayerGroundState
         _controller.GroundRootState.StateUpdate();
     }
 
-    public override void StateFixedUpdate()
-    {
-        _controller.GroundRootState.StateFixedUpdate();
-    }
-
     private void Move()
     {
         float direction = _controller.GetAxis();

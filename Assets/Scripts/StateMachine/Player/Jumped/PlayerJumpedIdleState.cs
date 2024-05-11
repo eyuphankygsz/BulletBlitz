@@ -16,10 +16,6 @@ public class PlayerJumpedIdleState : PlayerJumpedState
     {
         _controller.JumpRootState.StateUpdate();
     }
-    public override void StateFixedUpdate()
-    {
-        _controller.JumpRootState.StateFixedUpdate();
-    }
     public override void ExitState()
     {
         _controller.JumpRootState.ExitState();

@@ -59,12 +59,11 @@ public class PlayerJumpedState : PlayerBaseState
         if (_controller.TryToChangeState(NewState(), _stateEnum))
             return;
         _controller.Animator.SetFloat("Jump", _controller.YDirection, 0.1f, Time.deltaTime);
-    }
-    public override void StateFixedUpdate()
-    {
+
         if (_controller.IsOnGround())
             _controller.TryToChangeState(_controller.GroundRootState, _stateEnum);
     }
+
     private PlayerBaseState NewState()
     {
         if (IsMoving())
