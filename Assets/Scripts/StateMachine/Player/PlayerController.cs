@@ -120,7 +120,6 @@ public class PlayerController : MonoBehaviour
     {
         SetScripts();
         SetStates();
-        IgnoreCollisions();
     }
     void Start()
     {
@@ -225,28 +224,29 @@ public class PlayerController : MonoBehaviour
         if (trapHits == 1)
             _collectableHits[0].collider.GetComponent<TrapsBase>().OnCollide(gameObject);
 
-        if (_holdingObject == null)
+
+        int interactableHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.InteractableLayer);
+        if (interactableHits > 0)
         {
-            int interactableHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.InteractableLayer);
-            if (interactableHits > 0)
+            int closestId = 0;
+            float closestDistance = 100;
+            for (int i = 0; i < interactableHits; i++)
             {
-                int closestId = 0;
-                float closestDistance = 100;
-                for (int i = 0; i < interactableHits; i++)
+                if (_collectableHits[i].transform.GetComponent<Interactable>() == _holdingObject)
+                    continue;
+
+                float dist = Vector3.Distance(transform.position, _collectableHits[i].transform.position);
+                if (dist < closestDistance)
                 {
-                    float dist = Vector3.Distance(transform.position, _collectableHits[i].transform.position);
-                    if (dist < closestDistance)
-                    {
-                        closestId = i;
-                        closestDistance = dist;
-                    }
+                    closestId = i;
+                    closestDistance = dist;
                 }
-                _collectableHits[closestId].collider.GetComponent<Interactable>().OnTrigger(out _interactable);
-                PanelManager.Instance.InteractButton.gameObject.SetActive(true);
             }
-            else
-                PanelManager.Instance.InteractButton.gameObject.SetActive(false);
+            _collectableHits[closestId].collider.GetComponent<Interactable>().OnTrigger(out _interactable);
+            PanelManager.Instance.InteractButton.gameObject.SetActive(true);
         }
+        else
+            PanelManager.Instance.InteractButton.gameObject.SetActive(false);
 
     }
     public void HitWithDamage(int damage, GameObject attacker)
@@ -343,10 +343,6 @@ public class PlayerController : MonoBehaviour
         HitRootState = gameObject.AddComponent<PlayerHitState>();
         DeadRootState = gameObject.AddComponent<PlayerDeadState>();
         SpecialSkillState = gameObject.AddComponent<PlayerSpecialSkillState>();
-    }
-    void IgnoreCollisions()
-    {
-        Physics2D.IgnoreLayerCollision(Mathf.RoundToInt(Mathf.Log(GameManager.Instance.PlayerLayer.value, 2)), Mathf.RoundToInt(Mathf.Log(GameManager.Instance.InteractableLayer.value, 2)));
     }
     private void SetButtons()
     {

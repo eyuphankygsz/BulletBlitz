@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
         _levelLazer = GameObject.FindGameObjectWithTag("LevelLazer").GetComponent<Animator>();
         UpgradeCanvas = GameObject.FindGameObjectWithTag("UpgradeCanvas");
         SetBulletSkills();
+        IgnoreCollisions();
     }
     private void Start()
     {
@@ -123,7 +124,11 @@ public class GameManager : MonoBehaviour
         Collectables.Add(collectable);
         _shooter.RefreshEnemies();
     }
-
+    private void IgnoreCollisions()
+    {
+        Physics2D.IgnoreLayerCollision(Mathf.RoundToInt(Mathf.Log(PlayerLayer.value, 2)), Mathf.RoundToInt(Mathf.Log(InteractableLayer.value, 2)));
+        Physics2D.IgnoreLayerCollision(Mathf.RoundToInt(Mathf.Log(InteractableLayer.value, 2)), Mathf.RoundToInt(Mathf.Log(InteractableLayer.value, 2)));
+    }
     public void StartGame()
     {
         PanelManager.Instance.ClosePanel(PanelManager.Instance.Panels["MainPanel"]);

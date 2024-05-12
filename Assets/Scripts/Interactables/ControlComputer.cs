@@ -4,18 +4,16 @@ using UnityEngine.Events;
 
 public class ControlComputer : Interactable
 {
-    [SerializeField] private bool _isActive;
-    [SerializeField] private UnityEvent _events;
-    private Animator _animator;
+    private ComputerBehaviorBase _computerBehaviour;
+
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _computerBehaviour = GetComponent<ComputerBehaviorBase>();
     }
     public override void OnEnabled()
     {
-        _isActive = !_isActive;
-        _animator.SetBool("IsActive", _isActive);
-        _events.Invoke();
+        if (_computerBehaviour.GrantAction())
+            _computerBehaviour.ComputerBehavior();
     }
 
     public override void OnTrigger(out Interactable interactable)

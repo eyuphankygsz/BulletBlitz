@@ -48,6 +48,9 @@ public class PlayerJumpController : MonoBehaviour
         if ((_velocityY <= 0))
             _controller.CanCheckGround = true;
 
+        if (_controller.IsWallAhead() != 0)
+            _velocityX = 0;
+
         Vector3 moveVelocity = new Vector3(_velocityX, _velocityY, 0);
         transform.Translate(moveVelocity * Time.deltaTime);
     }
