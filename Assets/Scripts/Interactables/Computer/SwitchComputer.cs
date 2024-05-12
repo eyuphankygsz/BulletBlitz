@@ -1,16 +1,21 @@
 public sealed class SwitchComputer : ComputerBehaviorBase
 {
+
     public override bool GrantAction()
     {
        return true;
     }
-    public override void ComputerBehavior()
+    protected override void OnActivate()
     {
-        _isActive = !_isActive;
-        _animator.SetBool("IsActive", _isActive);
-        
-        for (int i = 0; i < _events.Length; i++)
-            _events[i].Invoke();
+        ComputerSettings(true);
+        for (int i = 0; i < _activateEvents.Length; i++)
+            _activateEvents[i].Invoke();
     }
 
+    protected override void OnDeactivate()
+    {
+        ComputerSettings(false);
+        for (int i = 0; i < _deactivateEvents.Length; i++)
+            _deactivateEvents[i].Invoke();
+    }
 }

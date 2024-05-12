@@ -13,13 +13,14 @@ public class ControlComputer : Interactable
     public override void OnEnabled()
     {
         if (_computerBehaviour.GrantAction())
-            _computerBehaviour.ComputerBehavior();
+            _computerBehaviour.GetBehavior();
     }
 
-    public override void OnTrigger(out Interactable interactable)
-    {
+    public override bool TriggerEnter(out Interactable interactable)
+    { 
         interactable = this;
+        return false;
     }
-
+    public override void TriggerExit() { }
 
 }

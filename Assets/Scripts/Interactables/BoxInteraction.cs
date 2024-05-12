@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class BoxInteraction : Interactable
 {
@@ -35,10 +33,11 @@ public class BoxInteraction : Interactable
         _rb.constraints = RigidbodyConstraints2D.None;
         GameManager.Instance.Player.GetComponent<PlayerController>().HoldObject(null);
     }
-    public override void OnTrigger(out Interactable interactable)
+    public override bool TriggerEnter(out Interactable interactable)
     {
         interactable = this;
+        return false;
     }
 
-
+    public override void TriggerExit() { }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public sealed class TimerComputer : ComputerBehaviorBase
@@ -6,14 +7,13 @@ public sealed class TimerComputer : ComputerBehaviorBase
     private Coroutine _computerRoutine;
     private Coroutine _eventRoutine;
     [SerializeField] private float _checkSeconds;
-    private WaitForSeconds _checkDelay;
+    private WaitForSeconds _checkDelay = new WaitForSeconds(1);
     [SerializeField] private float _lineDelay;
 
-    private void Start()
-    {
-        _checkDelay = new WaitForSeconds(_checkSeconds);
-    }
-    public override void ComputerBehavior()
+    [SerializeField] private GameObject _timerCanvas;
+    [SerializeField] private TextMeshProUGUI _timerTxt;
+
+    protected override void OnActivate()
     {
         _isActive = true;
         _animator.SetBool("IsActive", _isActive);
@@ -29,26 +29,37 @@ public sealed class TimerComputer : ComputerBehaviorBase
             _eventRoutine = StartCoroutine(InvokeLine());
         }
         else
-            for (int i = 0; i < _events.Length; i++)
-                _events[i].Invoke();
+            for (int i = 0; i < _activateEvents.Length; i++)
+                _activateEvents[i].Invoke();
+    }
+    protected override void OnDeactivate()
+    {
+        _timerCanvas.SetActive(false);
+        return;
     }
 
     public override bool GrantAction()
     {
-        Debug.Log(!_isActive);
         return !_isActive;
     }
     private IEnumerator InvokeLine()
     {
-        for (int i = 0; i < _events.Length; i++)
+        for (int i = 0; i < _activateEvents.Length; i++)
         {
-            _events[i].Invoke();
+            _activateEvents[i].Invoke();
             yield return new WaitForSeconds(_lineDelay);
         }
     }
     private IEnumerator WaitToDeactivate()
     {
-        yield return _checkDelay;
+        _timerCanvas.SetActive(true);
+        for (int i = 0; i < _checkSeconds; i++)
+        {
+            _timerTxt.text = (_checkSeconds - i).ToString();
+            yield return _checkDelay;
+        }
+
+        _timerCanvas.SetActive(false);
         _isActive = false;
         _animator.SetBool("IsActive", _isActive);
     }

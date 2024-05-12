@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Lasers : MonoBehaviour
 {
+    private const string ANM_CLOSE = "LaserClose";
+    private const string ANM_OPEN = "LaserOpen";
+
     private BoxCollider2D _collider;
     private Coroutine _timerCoroutine;
     private WaitForSeconds _delay;
@@ -18,11 +21,13 @@ public class Lasers : MonoBehaviour
     }
     public void OnOpen()
     {
-        _animator.SetTrigger("Open");
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(ANM_OPEN))
+            _animator.SetTrigger("Open");
     }
     public void OnClose()
     {
-        _animator.SetTrigger("Close");
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(ANM_CLOSE))
+            _animator.SetTrigger("Close");
     }
     public void EnableCollider()
     {
@@ -42,11 +47,10 @@ public class Lasers : MonoBehaviour
     {
         if (_locked)
             return;
- 
+
         if (withTime)
         {
-            if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("LaserClose"))
-                OnClose();
+            OnClose();
             if (_timerCoroutine != null)
                 StopCoroutine(_timerCoroutine);
             _timerCoroutine = StartCoroutine(WaitPortal());

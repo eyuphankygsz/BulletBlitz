@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    public abstract void OnTrigger(out Interactable interactable);
+    public abstract bool TriggerEnter(out Interactable interactable);
+    public abstract void TriggerExit();
     public abstract void OnEnabled();
 }

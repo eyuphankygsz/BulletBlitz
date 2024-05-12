@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AutoShooter _autoShooter;
 
     [SerializeField] SpriteRenderer[] _bodyParts;
+    private bool _isTrigger;
 
     //--------States---------
     public PlayerGroundState GroundRootState { get; private set; }
@@ -242,11 +243,18 @@ public class PlayerController : MonoBehaviour
                     closestDistance = dist;
                 }
             }
-            _collectableHits[closestId].collider.GetComponent<Interactable>().OnTrigger(out _interactable);
-            PanelManager.Instance.InteractButton.gameObject.SetActive(true);
+            _isTrigger = !_collectableHits[closestId].collider.GetComponent<Interactable>().TriggerEnter(out _interactable);
+
+            if (_isTrigger)
+                PanelManager.Instance.InteractButton.gameObject.SetActive(true);
         }
         else
+        {
             PanelManager.Instance.InteractButton.gameObject.SetActive(false);
+            if (_interactable != null)
+                _interactable.TriggerExit();
+            _interactable = null;
+        }
 
     }
     public void HitWithDamage(int damage, GameObject attacker)
@@ -378,7 +386,7 @@ public class PlayerController : MonoBehaviour
 
     void DisplayHealth()
     {
-        _healthUI.fillAmount = (float)_health / _maxHealth;
+        _healthUI.fillAmount = _health / _maxHealth;
     }
     public void TryToJump()
     {
@@ -396,7 +404,10 @@ public class PlayerController : MonoBehaviour
     {
         if (_interactable == null)
             return;
-        _interactable.OnEnabled();
+        if (_isTrigger)
+            _interactable.OnEnabled();
+        else if(_holdingObject != null)
+            _holdingObject.OnEnabled();
     }
     public void HoldObject(Interactable obj)
     {
