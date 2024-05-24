@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class TheButton : Interactable
 {
     private bool _isActive;
-    private int _pressure;
+    private bool _pressure;
     private SpriteRenderer _renderer;
     [SerializeField] private Sprite _activeSprite, _deactiveSprite;
     [SerializeField] private bool _bothWayEvents;
@@ -23,6 +23,8 @@ public class TheButton : Interactable
 
     private void OnActivate()
     {
+        _isActive = true;
+
         for (int i = 0; i < _activateEvents.Length; i++)
             _activateEvents[i].Invoke();
 
@@ -34,6 +36,8 @@ public class TheButton : Interactable
     }
     private void OnDeactivate()
     {
+        _isActive = false;
+
         for (int i = 0; i < _deactivateEvents.Length; i++)
             _deactivateEvents[i].Invoke();
 
@@ -51,31 +55,27 @@ public class TheButton : Interactable
     }
     private bool TryEnter()
     {
-        if (_isActive)
+        if (_isActive || _pressure)
             return true;
 
-        _pressure += 1;
-        _isActive = true;
         OnActivate();
         return true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _pressure += 1;
-        TryEnter();
+        OnActivate();
+        _pressure = true;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _pressure -= 1;
-        TriggerExit();
+        OnDeactivate();
+        _pressure = false;
     }
     public override void TriggerExit()
     {
-        if (!_isActive)
+        if (!_isActive || _pressure)
             return;
-        _pressure -= 1;
-        _isActive = false;
         OnDeactivate();
     }
 }

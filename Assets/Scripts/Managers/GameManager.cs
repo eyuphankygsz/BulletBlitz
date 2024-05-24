@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
     private void IgnoreCollisions()
     {
         Physics2D.IgnoreLayerCollision(Mathf.RoundToInt(Mathf.Log(PlayerLayer.value, 2)), Mathf.RoundToInt(Mathf.Log(InteractableLayer.value, 2)));
-        Physics2D.IgnoreLayerCollision(Mathf.RoundToInt(Mathf.Log(InteractableLayer.value, 2)), Mathf.RoundToInt(Mathf.Log(InteractableLayer.value, 2)));
+//        Physics2D.IgnoreLayerCollision(Mathf.RoundToInt(Mathf.Log(InteractableLayer.value, 2)), Mathf.RoundToInt(Mathf.Log(InteractableLayer.value, 2)));
     }
     public void StartGame()
     {

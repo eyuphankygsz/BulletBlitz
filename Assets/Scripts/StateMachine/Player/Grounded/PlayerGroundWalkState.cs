@@ -14,25 +14,25 @@ public class PlayerGroundWalkState : PlayerGroundState
         if (_controller.GetAxis() != 0)
             _controller.Animator.SetFloat("MoveSpeed", 1);
 
-        Move();
 
         _controller.GroundRootState.StateUpdate();
+    }
+    public override void StateFixedUpdate()
+    {
+        Move();
     }
 
     private void Move()
     {
         float direction = _controller.GetAxis();
-        float wallDistance = _controller.IsWallAhead();
-
-        if (wallDistance != 0)
-            if (Mathf.Sign(direction) == Mathf.Sign(wallDistance))
-                direction = 0;
-
-        _controller.transform.Translate(direction * Vector2.right * _speed * Time.deltaTime);
+        _controller.RB.velocity= new Vector2(direction * _controller.Speed * Time.deltaTime , _controller.RB.velocity.y);
 
     }
 
-    public override void EnterState(PlayerStateManager player) { }
+    public override void EnterState(PlayerStateManager player)
+    {
+        _controller.RB.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
 
     public override void ExitState() =>
         _controller.GroundRootState.ExitState();

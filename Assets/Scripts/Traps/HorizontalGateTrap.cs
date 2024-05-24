@@ -20,7 +20,6 @@ public class HorizontalGateTrap : TrapsBase
     }
     public void TrapActivity()
     {
-        _isActive = !_isActive;
         _stopped = false;
         _direction = _isActive ? Mathf.RoundToInt(Mathf.Sign(_activatedX - transform.position.x)) : Mathf.RoundToInt(Mathf.Sign(_startX - transform.position.x));
     }
@@ -46,11 +45,15 @@ public class HorizontalGateTrap : TrapsBase
     }
     public override void TrapActive()
     {
-
+        _isActive = true;
+        _stopped = false;
+        _direction = Mathf.RoundToInt(Mathf.Sign(_activatedX - transform.position.x));
     }
 
     public override void TrapDeactive()
     {
-
+        _isActive = false;
+        _stopped = false;
+        _direction = Mathf.RoundToInt(Mathf.Sign(_startX - transform.position.x));
     }
 }

@@ -21,11 +21,17 @@ public class PlayerController : MonoBehaviour
 
 
     //--------Physics and Controls---------
+
+    public Rigidbody2D RB { get; private set; }
+    public int Speed { get; private set; } = 140;
     [SerializeField] bool _joystickControl;
     FixedJoystick _joystick;
 
     private Interactable _interactable = null;
     private Interactable _holdingObject = null;
+    [SerializeField] private Interactable _triggerObject = null;
+    private bool _isTrigger;
+
     [SerializeField] private Transform _holdPoint;
 
     //--------------------------------------
@@ -40,17 +46,16 @@ public class PlayerController : MonoBehaviour
 
     public bool CanCheckGround = true;
 
-    private float _groundCheckCounter;
-    private bool _isGroundCheckCounting;
+
     [SerializeField] private LayerMask _groundLayerMask;
     [SerializeField] private Transform _groundCheckTranform;
     [SerializeField] private Vector2 _groundCheckSize;
     [SerializeField] private float _feetOffset;
 
-    [SerializeField] private LayerMask _wallLayerMask;
-    [SerializeField] private Transform _wallCheckTranform;
-    [SerializeField] private Vector2 _wallCheckSize;
-    [SerializeField] private float _wallCheckOffset;
+    [SerializeField] private Transform _interactableCheck;
+    [SerializeField] private float _interactableCheckOffset;
+    [SerializeField] private Vector2 _interactableCheckSize;
+
     //-----------------------------
 
     private bool _canMove = true;
@@ -60,7 +65,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AutoShooter _autoShooter;
 
     [SerializeField] SpriteRenderer[] _bodyParts;
-    private bool _isTrigger;
 
     //--------States---------
     public PlayerGroundState GroundRootState { get; private set; }
@@ -84,8 +88,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _defaultHitCooldownTime;
     private float _hitCooldownTimer;
     private float _colorTime;
+    private int _corrupedCoins = 0;
     public Collider2D HitObject { get; private set; }
-    [SerializeField] private Collider2D _collider;
 
 
     //----------------------------
@@ -137,37 +141,16 @@ public class PlayerController : MonoBehaviour
         _autoShooter.UpdateShooter();
         HitCooldownCountdown();
         CheckYDirection();
-        CheckHits();
+        CheckInteractables();
+        CarryObject();
     }
 
     public bool IsOnGround()
     {
         if (!CanCheckGround) return false;
 
-        int hits = Physics2D.BoxCastNonAlloc(_groundCheckTranform.position, _groundCheckSize, 0, Vector2.down, _groundHit, 0, _groundLayerMask);
-        if (hits > 0)
-        {
-            Vector3 closestPoint = _groundHit[0].collider.ClosestPoint(transform.position);
-            Vector3 position = transform.position;
-            position.y = closestPoint.y + _feetOffset;
-
-            if (position.y > transform.position.y + 0.1f)
-                return true;
-
-            transform.position = position;
-            _jumper.StopJump();
-            return true;
-        }
-        _sloope = false;
-        return false;
-    }
-    public float IsWallAhead()
-    {
-        int hits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _wallHit, 0, _wallLayerMask);
-        if (hits > 0)
-            return _wallHit[0].point.x - transform.position.x;
-
-        return 0;
+        // Perform a BoxCast to check for ground
+        return Physics2D.BoxCastNonAlloc(_groundCheckTranform.position, _groundCheckSize, 0, Vector2.down, _groundHit, 0, _groundLayerMask) > 0;
     }
 
     public float GetAxis()
@@ -195,11 +178,6 @@ public class PlayerController : MonoBehaviour
 
     public void Hit(Collider2D collision)
     {
-        if (collision.gameObject.layer == 11)
-        {
-            collision.gameObject.SetActive(false);
-            return;
-        }
         if (CanHit(collision) && !_isHitCooldownActive)
         {
             _isHit = true;
@@ -215,18 +193,25 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-    private void CheckHits()
+    private void Collect(Collider2D collider)
     {
-        int collectableHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.CollectableLayer);
-        for (int i = 0; i < collectableHits; i++)
-            Hit(_collectableHits[i].collider);
+        if(collider.tag == "CorruptedSilver")
+        {
+            _corrupedCoins++;
+            collider.gameObject.SetActive(false);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (GameManager.Instance.CollectableLayer == (GameManager.Instance.CollectableLayer | (1 << collision.gameObject.layer)))
+            Collect(collision);
 
-        int trapHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.TrapsLayer);
-        if (trapHits == 1)
-            _collectableHits[0].collider.GetComponent<TrapsBase>().OnCollide(gameObject);
-
-
-        int interactableHits = Physics2D.BoxCastNonAlloc(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.InteractableLayer);
+        if(GameManager.Instance.TrapsLayer == (GameManager.Instance.TrapsLayer| (1 << collision.gameObject.layer)))
+            collision.GetComponent<TrapsBase>().OnCollide(gameObject);
+    }
+    private void CheckInteractables()
+    {
+        int interactableHits = Physics2D.BoxCastNonAlloc(_interactableCheck.position + (Vector3.up * _interactableCheckOffset), _interactableCheckSize, 0, Vector2.down, _collectableHits, 0, GameManager.Instance.InteractableLayer);
         if (interactableHits > 0)
         {
             int closestId = 0;
@@ -243,16 +228,27 @@ public class PlayerController : MonoBehaviour
                     closestDistance = dist;
                 }
             }
-            _isTrigger = !_collectableHits[closestId].collider.GetComponent<Interactable>().TriggerEnter(out _interactable);
+            _isTrigger = _collectableHits[closestId].collider.GetComponent<Interactable>().TriggerEnter(out _interactable);
 
-            if (_isTrigger)
+            if (!_isTrigger)
                 PanelManager.Instance.InteractButton.gameObject.SetActive(true);
+            else
+                _triggerObject = _interactable;
+
+            if(_triggerObject != _interactable)
+            {
+                if (_triggerObject != null)
+                    _triggerObject.TriggerExit();
+                _triggerObject = null;
+            }
+
         }
         else
         {
             PanelManager.Instance.InteractButton.gameObject.SetActive(false);
-            if (_interactable != null)
-                _interactable.TriggerExit();
+            if (_triggerObject != null)
+                _triggerObject.TriggerExit();
+            _triggerObject = null;
             _interactable = null;
         }
 
@@ -296,8 +292,9 @@ public class PlayerController : MonoBehaviour
             if (collision.GetComponent<Bullet>().From == "Player")
                 return false;
 
-        if (collision.tag == "Portal")
+        if (collision.tag == "NextLevel")
         {
+            PlayerPrefs.SetInt("CorruptedCoin", PlayerPrefs.GetInt("CorruptedCoin") + _corrupedCoins);
             GameManager.Instance.NextScene();
             return false;
         }
@@ -339,6 +336,7 @@ public class PlayerController : MonoBehaviour
         _playerStateManager = GetComponent<PlayerStateManager>();
         _jumper = GetComponent<PlayerJumpController>();
         Animator = GetComponent<Animator>();
+        RB = GetComponent<Rigidbody2D>();
     }
     void SetStates()
     {
@@ -396,17 +394,17 @@ public class PlayerController : MonoBehaviour
             return;
         }
     }
-    public void StartJump(float yStrength, float xStrength, float gravity)
+    public void StartJump(int direction)
     {
-        _jumper.StartJump(yStrength, xStrength, gravity);
+        _jumper.StartJump(direction);
     }
     public void Interact()
     {
         if (_interactable == null)
             return;
-        if (_isTrigger)
+        if (!_isTrigger)
             _interactable.OnEnabled();
-        else if(_holdingObject != null)
+        else if (_holdingObject != null)
             _holdingObject.OnEnabled();
     }
     public void HoldObject(Interactable obj)
@@ -422,6 +420,12 @@ public class PlayerController : MonoBehaviour
         }
         _holdingObject = obj;
     }
+    public void CarryObject()
+    {
+        if (_holdingObject == null) return;
+
+        _holdingObject.transform.localPosition = Vector3.zero;
+    }
     private void CheckYDirection()
     {
         YDirection = Mathf.Sign(transform.position.y - _oldY);
@@ -432,6 +436,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(_groundCheckTranform.position, _groundCheckSize);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(_wallCheckTranform.position + (Vector3.up * _wallCheckOffset), _wallCheckSize);
+        Gizmos.DrawWireCube(_interactableCheck.position + (Vector3.up * _interactableCheckOffset), _interactableCheckSize);
     }
 }

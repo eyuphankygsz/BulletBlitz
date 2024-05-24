@@ -14,7 +14,6 @@ TagManager:
   - Kid
   - Goat
   - Crow
-  - BadSoul
   - HealthBar
   - UpgradeCanvas
   - SkillBar
@@ -23,6 +22,7 @@ TagManager:
   - Witch
   - LevelLazer
   - InteractButton
+  - CorruptedSilver
   layers:
   - Default
   - TransparentFX

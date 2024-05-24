@@ -6,10 +6,7 @@ public class PlayerJumpController : MonoBehaviour
 {
     bool _jump;
 
-    private float _gravity;
-
-    private float _velocityY, _velocityX;
-    private int _yDirection, _xDirection;
+    private float _timer = 0.5f;
 
     private PlayerController _controller;
 
@@ -18,40 +15,23 @@ public class PlayerJumpController : MonoBehaviour
         _controller = GetComponent<PlayerController>();
     }
 
-    public void StartJump(float yStrength, float xStrength, float gravity)
+    public void StartJump(int direction)
     {
-        _velocityY = yStrength;
-        _velocityX = xStrength;
-
-        _yDirection = (int)Mathf.Sign(_velocityY);
-        _xDirection = (int)Mathf.Sign(_velocityX);
-
-        _gravity = gravity;
-
-        Debug.Log($"JUMP: Y: {_velocityY} X: {_velocityX} G: {_gravity}");
+        _controller.RB.AddForce(new Vector2(200 * direction, 300));
         _controller.CanCheckGround = false;
         _jump = true;
     }
-    public void StopJump()
+    public void Update()
     {
-        _jump = false;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        if (!_jump) return;
-
-        _velocityY += _gravity * Time.deltaTime;
-        if (_velocityX > 0)
-            _velocityX -= _xDirection * Time.deltaTime;
-
-        if ((_velocityY <= 0))
-            _controller.CanCheckGround = true;
-
-        if (_controller.IsWallAhead() != 0)
-            _velocityX = 0;
-
-        Vector3 moveVelocity = new Vector3(_velocityX, _velocityY, 0);
-        transform.Translate(moveVelocity * Time.deltaTime);
+        if (_jump)
+        {
+            _timer -= Time.deltaTime;
+            if (_timer <= 0)
+            {
+                _controller.CanCheckGround = true;
+                _jump = false;
+                _timer = 0.5f;
+            }
+        }
     }
 }

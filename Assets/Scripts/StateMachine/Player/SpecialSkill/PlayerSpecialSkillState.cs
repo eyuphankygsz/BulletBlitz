@@ -41,7 +41,10 @@ public class PlayerSpecialSkillState : PlayerBaseState
     public override void ExitState() 
     {
         _controller.Animator.SetTrigger("SpecialStop");
-        _controller.GetComponent<PlayerSpecialSkill>().Stop();
     }
 
+    public override void StateFixedUpdate()
+    {
+
+    }
 }

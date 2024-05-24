@@ -16,9 +16,6 @@ public class PlayerJumpedState : PlayerBaseState
 
     private bool _isJumping = false;
 
-    private float _yVelocity = 4, _xVelocity = 0;
-    private float _gravity = -9;
-
     bool IsMoving() { return _controller.GetAxis() != 0; }
 
     PlayerController.States _stateEnum = PlayerController.States.Jump;
@@ -36,6 +33,10 @@ public class PlayerJumpedState : PlayerBaseState
         if (_isJumping || (_isJumpedOnce && !_canDoubleJump) || (_canDoubleJump && _isJumpedTwice))
             return;
 
+
+        _controller.RB.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _controller.RB.velocity = new Vector2(_controller.RB.velocity.x, 0);
+
         _isJumpedOnce = false;
         _isJumpedTwice = false;
         _controller.Animator.SetBool("OnGround", false);
@@ -50,7 +51,7 @@ public class PlayerJumpedState : PlayerBaseState
             _isJumpedTwice = true;
         _isJumpedOnce = true;
 
-        _controller.StartJump(_yVelocity, _xVelocity, _gravity);
+        _controller.StartJump(0);
 
 
     }
@@ -82,4 +83,6 @@ public class PlayerJumpedState : PlayerBaseState
         _isJumpedOnce = false;
         _isJumpedTwice = false;
     }
+
+    public override void StateFixedUpdate() { }
 }

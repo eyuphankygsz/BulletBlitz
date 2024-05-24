@@ -42,8 +42,8 @@ public class PlayerHitState : PlayerBaseState
 
         _controller.Animator.SetTrigger("HitTrigger");
 
-        float directionX = _controller.transform.position.x - _controller.HitObject.transform.position.x >= 0 ? 1 : -1;
-        _controller.StartJump(_yVelocity, _xVelocity * directionX, _gravity);
+        int directionX = _controller.transform.position.x - _controller.HitObject.transform.position.x >= 0 ? 1 : -1;
+        _controller.StartJump(directionX);
     }
 
     void CheckGround()
@@ -59,5 +59,10 @@ public class PlayerHitState : PlayerBaseState
     public override void StateUpdate()
     {
         CheckGround();
+    }
+
+    public override void StateFixedUpdate()
+    {
+
     }
 }

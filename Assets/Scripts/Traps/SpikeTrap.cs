@@ -14,7 +14,7 @@ public class SpikeTrap : TrapsBase
     }
     public override void OnCollide(GameObject affected)
     {
-        if (affected.CompareTag("Player"))
+        if (affected.CompareTag("Player")) 
             affected.GetComponent<PlayerController>().HitWithDamage(_damage, gameObject);
     }
     public void TrapActivity()

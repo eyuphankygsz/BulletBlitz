@@ -4,7 +4,6 @@ public class PlayerGroundState : PlayerBaseState
 {
 
     PlayerController.States _stateEnum = PlayerController.States.Ground;
-    protected float _speed = 3;
 
     protected PlayerStateManager _player;
     private PlayerController _controller;
@@ -42,12 +41,11 @@ public class PlayerGroundState : PlayerBaseState
     {
         if (_controller != null)
         {
-            if (!_controller.IsOnGround())
-                _controller.transform.Translate(Vector2.down * _speed * 2 * Time.deltaTime);
             if (Input.GetKeyDown(KeyCode.Space))
                 _controller.TryToJump();
         }
     }
     public override void ExitState() { }
 
+    public override void StateFixedUpdate() { }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,7 +8,7 @@ public class PlayerSpecialSkill : MonoBehaviour
     private int _killedEnemies;
 
     private Image _skillBar;
-    [SerializeField] private GameObject _light, _particle;
+    [SerializeField] private GameObject _particle;
 
 
     public int KilledEnemies
@@ -65,8 +63,6 @@ public class PlayerSpecialSkill : MonoBehaviour
     {
         if (_killedEnemies != _minEnemies)
             return;
-
-        _light.SetActive(true);
         _particle.SetActive(true);
         EnemySoundHolder.Instance.PlayAudio(EnemySoundHolder.Instance.PlayerSFX.Clips["Hit"], false);
 
@@ -77,9 +73,5 @@ public class PlayerSpecialSkill : MonoBehaviour
         ChangeUI();
     }
 
-    public void Stop()
-    {
-        _light.SetActive(false);
-    }
 
 }

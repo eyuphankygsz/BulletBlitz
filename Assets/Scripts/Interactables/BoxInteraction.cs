@@ -4,11 +4,9 @@ public class BoxInteraction : Interactable
 {
     [SerializeField] private bool _isHolding;
     private Rigidbody2D _rb;
-    private Animator _animator;
     private SpriteRenderer _renderer;
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
     }

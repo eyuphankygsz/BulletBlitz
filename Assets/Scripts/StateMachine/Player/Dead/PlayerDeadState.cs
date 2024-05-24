@@ -60,6 +60,11 @@ public class PlayerDeadState : PlayerBaseState
         }
     }
     public override void ExitState() { }
+
+    public override void StateFixedUpdate()
+    {
+
+    }
 }
 
 
