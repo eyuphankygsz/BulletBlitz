@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    public abstract bool TriggerEnter(out Interactable interactable);
-    public abstract void TriggerExit();
+    public abstract bool TriggerEnter(out Interactable interactable, Collider2D collider);
+    public abstract void TriggerExit(Collider2D collider);
     public abstract void OnEnabled();
 }

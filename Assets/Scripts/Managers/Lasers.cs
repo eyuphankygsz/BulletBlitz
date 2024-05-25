@@ -10,7 +10,7 @@ public class Lasers : MonoBehaviour
     private Coroutine _timerCoroutine;
     private WaitForSeconds _delay;
     [SerializeField] private float _time;
-    private bool _locked;
+    private bool _locked, _on;
     private Animator _animator;
 
     private void Awake()
@@ -21,13 +21,11 @@ public class Lasers : MonoBehaviour
     }
     public void OnOpen()
     {
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(ANM_OPEN))
-            _animator.SetTrigger("Open");
+        _animator.SetBool("On", true);
     }
     public void OnClose()
     {
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName(ANM_CLOSE))
-            _animator.SetTrigger("Close");
+        _animator.SetBool("On", false);
     }
     public void EnableCollider()
     {
@@ -62,10 +60,24 @@ public class Lasers : MonoBehaviour
     }
     private void OpenCloseHandler()
     {
-        if (_collider.enabled)
+        _on = !_on;
+        if (_on)
             OnClose();
         else
             OnOpen();
+    }
+    public void CertainActivation(bool open)
+    {
+        if (open)
+        {
+            _on = true;
+            OnClose();
+        }
+        else
+        {
+            _on = false;
+            OnOpen();
+        }
     }
 
     IEnumerator WaitPortal()

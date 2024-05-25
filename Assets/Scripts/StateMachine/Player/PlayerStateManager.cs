@@ -30,7 +30,7 @@ public class PlayerStateManager : MonoBehaviour
         if (_currentState != null)
             _currentState.ExitState();
 
-        Debug.Log(state);
+        //Debug.Log(state);
         _currentState = state;
         _currentState.EnterState(this);
     }

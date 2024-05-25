@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     //--------Physics and Controls---------
 
     public Rigidbody2D RB { get; private set; }
+    private Collider2D _collider;
     public int Speed { get; private set; } = 140;
     [SerializeField] bool _joystickControl;
     FixedJoystick _joystick;
@@ -243,7 +244,7 @@ public class PlayerController : MonoBehaviour
                     closestDistance = dist;
                 }
             }
-            _isTrigger = _collectableHits[closestId].collider.GetComponent<Interactable>().TriggerEnter(out _interactable);
+            _isTrigger = _collectableHits[closestId].collider.GetComponent<Interactable>().TriggerEnter(out _interactable, _collider);
 
             if (!_isTrigger)
                 PanelManager.Instance.InteractButton.gameObject.SetActive(true);
@@ -253,7 +254,7 @@ public class PlayerController : MonoBehaviour
             if (_triggerObject != _interactable)
             {
                 if (_triggerObject != null)
-                    _triggerObject.TriggerExit();
+                    _triggerObject.TriggerExit(_collider);
                 _triggerObject = null;
             }
 
@@ -262,7 +263,7 @@ public class PlayerController : MonoBehaviour
         {
             PanelManager.Instance.InteractButton.gameObject.SetActive(false);
             if (_triggerObject != null)
-                _triggerObject.TriggerExit();
+                _triggerObject.TriggerExit(_collider);
             _triggerObject = null;
             _interactable = null;
         }
@@ -345,6 +346,7 @@ public class PlayerController : MonoBehaviour
         _jumper = GetComponent<PlayerJumpController>();
         Animator = GetComponent<Animator>();
         RB = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
     }
     void SetStates()
     {

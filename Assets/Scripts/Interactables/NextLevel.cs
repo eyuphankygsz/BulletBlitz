@@ -12,7 +12,7 @@ public class NextLevel : Interactable
 
     }
 
-    public override bool TriggerEnter(out Interactable interactable)
+    public override bool TriggerEnter(out Interactable interactable, Collider2D collider)
     {
         interactable = null;
         if (_done)
@@ -21,7 +21,7 @@ public class NextLevel : Interactable
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         return false;
     }
-    public override void TriggerExit()
+    public override void TriggerExit(Collider2D collider)
     {
         throw new System.NotImplementedException();
     }

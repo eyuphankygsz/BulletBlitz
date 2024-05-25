@@ -31,11 +31,11 @@ public class BoxInteraction : Interactable
         _rb.constraints = RigidbodyConstraints2D.None;
         GameManager.Instance.Player.GetComponent<PlayerController>().HoldObject(null);
     }
-    public override bool TriggerEnter(out Interactable interactable)
+    public override bool TriggerEnter(out Interactable interactable, Collider2D collider)
     {
         interactable = this;
         return false;
     }
 
-    public override void TriggerExit() { }
+    public override void TriggerExit(Collider2D collider) { }
 }

@@ -16,11 +16,11 @@ public class ControlComputer : Interactable
             _computerBehaviour.GetBehavior();
     }
 
-    public override bool TriggerEnter(out Interactable interactable)
+    public override bool TriggerEnter(out Interactable interactable, Collider2D collider)
     { 
         interactable = this;
         return false;
     }
-    public override void TriggerExit() { }
+    public override void TriggerExit(Collider2D collider) { }
 
 }

@@ -17877,6 +17877,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: CorruptedCoinFloat (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 7317534069473799448, guid: 9daf421c710eef84599db2b8a03413ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.576
+      objectReference: {fileID: 0}
+    - target: {fileID: 7317534069473799448, guid: 9daf421c710eef84599db2b8a03413ff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17899,6 +17907,8 @@ GameObject:
   - component: {fileID: 801387558}
   - component: {fileID: 801387557}
   - component: {fileID: 801387556}
+  - component: {fileID: 801387560}
+  - component: {fileID: 801387559}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Ground
@@ -18500,6 +18510,76 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!66 &801387559
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801387554}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths: []
+  m_CompositePaths:
+    m_Paths: []
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+  m_UseDelaunayMesh: 0
+  m_CompositeGameObject: {fileID: 801387554}
+--- !u!50 &801387560
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801387554}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!4 &844973274 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2658688745265255514, guid: 9daf421c710eef84599db2b8a03413ff, type: 3}

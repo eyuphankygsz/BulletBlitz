@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class TheButton : Interactable
 {
     private bool _isActive;
-    private bool _pressure;
     private SpriteRenderer _renderer;
     [SerializeField] private Sprite _activeSprite, _deactiveSprite;
     [SerializeField] private bool _bothWayEvents;
     [SerializeField] private UnityEvent[] _activateEvents, _deactivateEvents;
+    private List<Collider2D> _colliders = new List<Collider2D>();
+    Collider2D oldcollider;
 
     private void Awake()
     {
@@ -48,34 +50,48 @@ public class TheButton : Interactable
         _renderer.sprite = _deactiveSprite;
     }
 
-    public override bool TriggerEnter(out Interactable interactable)
+    public override bool TriggerEnter(out Interactable interactable, Collider2D collider)
     {
+
         interactable = this;
-        return TryEnter();
-    }
-    private bool TryEnter()
-    {
-        if (_isActive || _pressure)
+        if (!_colliders.Contains(collider))
+            _colliders.Add(collider);
+
+        if (_isActive || _colliders.Count != 1)
             return true;
 
+        _isActive = true;
         OnActivate();
         return true;
+    }
+    public override void TriggerExit(Collider2D collider)
+    {
+        if (_colliders.Contains(collider)) 
+            _colliders.Remove(collider);
+     
+        if (!_isActive || _colliders.Count > 0)
+            return;
+
+
+        _isActive = false;
+        OnDeactivate();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!_colliders.Contains(collision))
+            _colliders.Add(collision);
+
+        if (_isActive || _colliders.Count != 1) return;
+        _isActive = true;
         OnActivate();
-        _pressure = true;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        OnDeactivate();
-        _pressure = false;
-    }
-    public override void TriggerExit()
-    {
-        if (!_isActive || _pressure)
-            return;
+        if (_colliders.Contains(collision))
+            _colliders.Remove(collision);
+        if (!_isActive || _colliders.Count > 0) return;
+        _isActive = false;
         OnDeactivate();
     }
 }
