@@ -17,7 +17,8 @@ public class PlayerJumpController : MonoBehaviour
 
     public void StartJump(int direction)
     {
-        _controller.RB.AddForce(new Vector2(200 * direction, 300));
+        _controller.RB.velocity = new Vector2(_controller.RB.velocity.x, 0);
+        _controller.RB.AddForce(new Vector2(100 * direction, 350));
         _controller.CanCheckGround = false;
         _jump = true;
     }

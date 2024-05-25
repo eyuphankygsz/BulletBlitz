@@ -9,6 +9,13 @@ public class MoveToPlayer : MonoBehaviour
     void Start()
     {
         _target = GameManager.Instance.Player.transform;
+        _timer = .5f;
+    }
+    private void OnEnable()
+    {
+        _timer = .5f;
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        GetComponent<Collider2D>().isTrigger = false;
     }
 
     // Update is called once per frame
@@ -23,6 +30,7 @@ public class MoveToPlayer : MonoBehaviour
         {
             _timer = 0;
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            GetComponent<Collider2D>().isTrigger = true;
         }
         Vector3 direction = _target.position - transform.position;
         direction.Normalize();

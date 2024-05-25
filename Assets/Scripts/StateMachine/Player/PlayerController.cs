@@ -128,6 +128,7 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
+        PlayerPrefs.SetInt("OldCorruptedSilver", PlayerPrefs.GetInt("CorruptedSilver"));
         SetButtons();
         _playerStateManager.SwitchState(GroundIdleState);
     }
@@ -195,7 +196,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Collect(Collider2D collider)
     {
-        if(collider.tag == "CorruptedSilver")
+        if (collider.tag == "CorruptedSilver")
         {
             _corrupedCoins++;
             collider.gameObject.SetActive(false);
@@ -204,10 +205,24 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (GameManager.Instance.CollectableLayer == (GameManager.Instance.CollectableLayer | (1 << collision.gameObject.layer)))
+        {
             Collect(collision);
+            return;
+        }
 
-        if(GameManager.Instance.TrapsLayer == (GameManager.Instance.TrapsLayer| (1 << collision.gameObject.layer)))
+        if (GameManager.Instance.TrapsLayer == (GameManager.Instance.TrapsLayer | (1 << collision.gameObject.layer)))
+        {
             collision.GetComponent<TrapsBase>().OnCollide(gameObject);
+            return;
+        }
+
+        if (GameManager.Instance.LevelLayer == (GameManager.Instance.LevelLayer | (1 << collision.gameObject.layer)))
+        {
+            if (PlayerPrefs.GetInt("CorruptedSilver") < PlayerPrefs.GetInt("CorruptedSilver") + _corrupedCoins)
+                PlayerPrefs.SetInt("CorruptedSilver", PlayerPrefs.GetInt("CorruptedSilver") + _corrupedCoins);
+            GameManager.Instance.NextScene();
+            return;
+        }
     }
     private void CheckInteractables()
     {
@@ -235,7 +250,7 @@ public class PlayerController : MonoBehaviour
             else
                 _triggerObject = _interactable;
 
-            if(_triggerObject != _interactable)
+            if (_triggerObject != _interactable)
             {
                 if (_triggerObject != null)
                     _triggerObject.TriggerExit();
@@ -291,13 +306,6 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "Bullet")
             if (collision.GetComponent<Bullet>().From == "Player")
                 return false;
-
-        if (collision.tag == "NextLevel")
-        {
-            PlayerPrefs.SetInt("CorruptedCoin", PlayerPrefs.GetInt("CorruptedCoin") + _corrupedCoins);
-            GameManager.Instance.NextScene();
-            return false;
-        }
 
         HitObject = collision;
         return true;

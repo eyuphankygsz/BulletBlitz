@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     //--------Layers---------
     [field: SerializeField] public LayerMask PlayerLayer { get; private set; }
     [field: SerializeField] public LayerMask EnemyLayer { get; private set; }
-    [field: SerializeField] public LayerMask WallLayer { get; private set; }
+    [field: SerializeField] public LayerMask LevelLayer { get; private set; }
     [field: SerializeField] public LayerMask CollectableLayer { get; private set; }
     [field: SerializeField] public LayerMask TrapsLayer { get; private set; }
     [field: SerializeField] public LayerMask InteractableLayer { get; private set; }

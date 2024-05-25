@@ -50,9 +50,9 @@ MonoBehaviour:
   <EnemyLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
-  <WallLayer>k__BackingField:
+  <LevelLayer>k__BackingField:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 4096
   <CollectableLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 2048
