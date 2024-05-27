@@ -11,8 +11,9 @@ public class KidDeadState : EnemyBaseState
     public override void EnterState(EnemyStateManager enemy)
     {
         EnemySoundHolder.Instance.PlayAudio(EnemySoundHolder.Instance.EnemySFXDictionary["Kid"].Clips["Death"], false);
-
         _controller.CurrentState = _currentState;
+        _controller.DeadEvents();
+
         GameObject.Instantiate(_controller.DestroyParticle, _controller.transform.position, Quaternion.identity);
 
         _controller.DropItems();

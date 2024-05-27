@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> Collectables { get; private set; } = new List<GameObject>();
 
-    private Animator _levelLazer;
 
     public GameObject UpgradeCanvas { get; private set; }
 
@@ -27,6 +26,7 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public LayerMask LevelLayer { get; private set; }
     [field: SerializeField] public LayerMask CollectableLayer { get; private set; }
     [field: SerializeField] public LayerMask TrapsLayer { get; private set; }
+    [field: SerializeField] public LayerMask BulletsLayer { get; private set; }
     [field: SerializeField] public LayerMask InteractableLayer { get; private set; }
     //-----------------------
 
@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
         _shooter = Player.GetComponent<AutoShooter>();
         _skiller = Player.GetComponent<PlayerSpecialSkill>();
 
-        _levelLazer = GameObject.FindGameObjectWithTag("LevelLazer").GetComponent<Animator>();
         UpgradeCanvas = GameObject.FindGameObjectWithTag("UpgradeCanvas");
         SetBulletSkills();
         IgnoreCollisions();
@@ -92,16 +91,14 @@ public class GameManager : MonoBehaviour
     {
         int scene = SceneManager.GetActiveScene().buildIndex;
         if (PlayerPrefs.HasKey("Upgrade_Level" + scene) || PlayerPrefs.GetInt("Level") % 5 != 0)
-        {
-            OpenPortal();
-        }
+            GameObject.FindGameObjectWithTag("LevelLazer").GetComponent<Lasers>().CertainActivation(true);
         else
             ShowUpgrade();
     }
     public void EndGameAfterUpgrade()
     {
         Player.GetComponent<PlayerController>().CanMove = true;
-        OpenPortal();
+        GameObject.FindGameObjectWithTag("LevelLazer").GetComponent<Lasers>().CertainActivation(true);
     }
     public void NextScene()
     {
@@ -113,10 +110,6 @@ public class GameManager : MonoBehaviour
     void ShowUpgrade()
     {
         SkillManager.Instance.Setup();
-    }
-    void OpenPortal()
-    {
-        _levelLazer.SetTrigger("Close");
     }
 
     public void AddCollectable(GameObject collectable)

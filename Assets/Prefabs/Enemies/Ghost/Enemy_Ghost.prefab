@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 8335038220053708060}
   - component: {fileID: 6459963993081721744}
   - component: {fileID: 7945565727887860519}
-  - component: {fileID: 6584190965308965680}
+  - component: {fileID: -8019909240994630573}
   - component: {fileID: 8373029254093974299}
   - component: {fileID: 6646842269839006824}
   - component: {fileID: 7196900026043263801}
@@ -139,7 +139,7 @@ MonoBehaviour:
   _endPoint: {x: 0, y: 0, z: 0}
   _enemyCheckTransform: {fileID: 1620164020559187384}
   _enemyCheckSize: {x: 0.5, y: 0.5}
-  _seenRange: {x: 6, y: 6}
+  _seenRange: {x: 10, y: 10}
   _lookPoint: {fileID: 0}
   _lookOffset: 0
   _attackRadius: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2918e3d5a54cbe14aa4c9cbbd3b65947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6584190965308965680
+--- !u!114 &-8019909240994630573
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

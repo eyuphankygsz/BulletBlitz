@@ -1,5 +1,6 @@
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyController : MonoBehaviour
 {
@@ -161,6 +162,8 @@ public class EnemyController : MonoBehaviour
     //-------- Map Control --------
     [field: SerializeField] public float MinX, MaxX, MinY, MaxY;
     //-----------------------------
+
+    [SerializeField] private UnityEvent[] _deadEvents;
     private void Awake()
     {
         GameManager.Instance.AddEnemy(gameObject);
@@ -440,6 +443,11 @@ public class EnemyController : MonoBehaviour
                     newItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-100, 100), Random.Range(-100, 100)));
                 }
             }
+    }
+    public void DeadEvents()
+    {
+        for (int i = 0; i < _deadEvents.Length; i++)
+            _deadEvents[i].Invoke();
     }
     private void OnDrawGizmos()
     {

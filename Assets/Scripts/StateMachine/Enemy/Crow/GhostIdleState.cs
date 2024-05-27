@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class CrowIdleState : EnemyBaseState
+public class GhostIdleState : EnemyBaseState
 {
     private EnemyController.States _currentState = EnemyController.States.Idle;
 
-    private CrowBehavior _behavior;
+    private GhostBehavior _behavior;
     private EnemyStateManager _stateManager;
 
     private float _attackTimer, _defaultAttackTimer;
     private bool _seen;
 
-    public CrowIdleState(EnemyController controller) : base(controller) { }
+    public GhostIdleState(EnemyController controller) : base(controller) { }
 
     public override void EnterState(EnemyStateManager enemy)
     {
@@ -25,7 +25,7 @@ public class CrowIdleState : EnemyBaseState
     void Initialize(EnemyStateManager enemy)
     {
         _stateManager = enemy;
-        _behavior = (CrowBehavior)_controller.EnemyBehavior;
+        _behavior = (GhostBehavior)_controller.EnemyBehavior;
     }
     void SetStats()
     {

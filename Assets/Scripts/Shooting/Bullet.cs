@@ -59,7 +59,7 @@ public class Bullet : MonoBehaviour
         _shootDirection = (target - transform.position).normalized;
         Vector3 difference = transform.position + _shootDirection - transform.position;
         float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ + 90);
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
     }
     void Update()
     {

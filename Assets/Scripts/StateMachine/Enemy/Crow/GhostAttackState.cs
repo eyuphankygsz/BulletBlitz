@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class CrowAttackState : EnemyBaseState
+public class GhostAttackState : EnemyBaseState
 {
     private EnemyController.States _currentState = EnemyController.States.Attack;
 
-    private CrowBehavior _behavior;
+    private GhostBehavior _behavior;
     private EnemyStateManager _stateManager;
 
     private float _maxRange = 2f;
@@ -21,7 +21,7 @@ public class CrowAttackState : EnemyBaseState
     private bool _canPlaySound = true;
 
     private float _minX, _maxX, _minY, _maxY;
-    public CrowAttackState(EnemyController controller) : base(controller) { }
+    public GhostAttackState(EnemyController controller) : base(controller) { }
 
     public override void EnterState(EnemyStateManager enemy)
     {
@@ -33,7 +33,7 @@ public class CrowAttackState : EnemyBaseState
     void Initialize(EnemyStateManager enemy)
     {
         _stateManager = enemy;
-        _behavior = (CrowBehavior)_controller.EnemyBehavior;
+        _behavior = (GhostBehavior)_controller.EnemyBehavior;
 
         _minX = _controller.MinX;
         _maxX = _controller.MaxX;
@@ -67,7 +67,7 @@ public class CrowAttackState : EnemyBaseState
             }
 
             Vector2 direction = (_controller.EnemyObject.transform.position - _controller.transform.position).normalized;
-            _controller.RB.AddForce(-direction * 200);
+            _controller.RB.AddForce(-direction * 100);
             horizontal = 0;
             return;
         }

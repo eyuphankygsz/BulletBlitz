@@ -117,6 +117,7 @@ public class AutoShooter : MonoBehaviour
 
     public void Shoot()
     {
+        if(_closestEnemy != null)
         EnemySoundHolder.Instance.PlayAudio(EnemySoundHolder.Instance.PlayerSFX.Clips["Shoot"], false);
 
         if (_weaponStat.Speed.Length > 1)

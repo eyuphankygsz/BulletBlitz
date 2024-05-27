@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 4040094805173128116}
   m_Layer: 6
   m_Name: HorizontalGate
-  m_TagString: Untagged
+  m_TagString: Sticked
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -294,7 +294,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1.5
-  _activatedX: 57
+  _activatedPos: 0
+  _vertical: 0
 --- !u!1001 &1918369064074701685
 PrefabInstance:
   m_ObjectHideFlags: 0

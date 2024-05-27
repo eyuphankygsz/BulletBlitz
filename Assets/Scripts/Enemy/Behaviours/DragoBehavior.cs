@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GoatBehavior : MonoBehaviour, EnemyBehaviorBase
+public class DragoBehavior : MonoBehaviour, EnemyBehaviorBase
 {
     EnemyController _controller;
 

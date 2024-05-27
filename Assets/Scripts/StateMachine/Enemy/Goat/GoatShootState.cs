@@ -4,7 +4,7 @@ public class GoatShootState : EnemyBaseState
 {
 
     private EnemyStateManager _stateManager;
-    private GoatBehavior _behavior;
+    private DragoBehavior _behavior;
     private EnemyController.States _currentState = EnemyController.States.Attack;
 
     private float _reMoveTimer, _reMoveDefaultTime, _attackTimer;
@@ -30,7 +30,7 @@ public class GoatShootState : EnemyBaseState
     void Initialize(EnemyStateManager enemy)
     {
         _stateManager = enemy;
-        _behavior = (GoatBehavior)_controller.EnemyBehavior;
+        _behavior = (DragoBehavior)_controller.EnemyBehavior;
 
 
         _controller.Animator.SetFloat("AttackSpeed", _controller.EnemyStat.AttackSpeed);
@@ -72,13 +72,6 @@ public class GoatShootState : EnemyBaseState
             Shoot();
 
         }
-
-
-        LookAtPlayer();
-
-        Vector3 difference = _controller.Player.position - _controller.LookPoint.position;
-        float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        _controller.LookPoint.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ + _controller.LookOffset);
     }
 
     void Shoot()
@@ -90,6 +83,13 @@ public class GoatShootState : EnemyBaseState
 
         if (_bulletStat.Speed.Length > 1)
             _currentSkill = _bulletCounter % _bulletStat.Speed.Length;
+
+        Debug.Log(_controller.AttackPoint.position);
+        Debug.Log(_controller.Player.position);
+        Debug.Log(_controller.EnemyStat.AttackDamage);
+        Debug.Log(_bulletStat.Damage[_currentSkill]);
+        Debug.Log(_controller.EnemyStat.BulletSpeed);
+        Debug.Log(_bulletStat.Speed[_currentSkill]);
 
         _bullets[_bulletCounter % _bulletStat.MaxBullet].Setup(
             _controller.AttackPoint.position,
@@ -115,17 +115,6 @@ public class GoatShootState : EnemyBaseState
     {
         _controller.TryToChangeState(_behavior.PatrolState, _currentState);
         _reMoveTimer = _reMoveDefaultTime;
-    }
-    void LookAtPlayer()
-    {
-        Vector2 direction = _controller.Player.position - _controller.transform.position;
-        if (direction.x < 0)
-            _newDirection = 1;
-        else if (direction.x > 0)
-            _newDirection = -1;
-
-        _controller.transform.localScale = new Vector3(Mathf.Abs(_controller.transform.localScale.x) * _newDirection, _controller.transform.localScale.y, _controller.
-            transform.localScale.z);
     }
     public override void ExitState()
     {

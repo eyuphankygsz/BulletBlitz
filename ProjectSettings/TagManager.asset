@@ -23,6 +23,7 @@ TagManager:
   - LevelLazer
   - InteractButton
   - CorruptedSilver
+  - Sticked
   layers:
   - Default
   - TransparentFX

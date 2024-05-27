@@ -8,7 +8,7 @@ public class GoatPatrolState : EnemyBaseState
     float _startPoint, _endPoint;
     float _speed;
     
-    GoatBehavior _behavior;
+    DragoBehavior _behavior;
     EnemyStateManager _stateManager;
 
     float _newDirection = 1;
@@ -29,7 +29,7 @@ public class GoatPatrolState : EnemyBaseState
     void Initialize(EnemyStateManager enemy)
     {
         _stateManager = enemy;
-        _behavior = (GoatBehavior)_controller.EnemyBehavior;
+        _behavior = (DragoBehavior)_controller.EnemyBehavior;
         DefinePatrolPoints();
         SetStats();
     }

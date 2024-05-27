@@ -150,8 +150,13 @@ public class PlayerController : MonoBehaviour
     public bool IsOnGround()
     {
         if (!CanCheckGround) return false;
+        int hits = Physics2D.BoxCastNonAlloc(_groundCheckTranform.position, _groundCheckSize, 0, Vector2.down, _groundHit, 0, _groundLayerMask);
+        if (hits > 0)
+            if (_groundHit[0].transform.tag == "Sticked")
+                transform.SetParent(_groundHit[0].transform);
+            else if (transform.parent != null)
+                transform.SetParent(null);
 
-        // Perform a BoxCast to check for ground
         return Physics2D.BoxCastNonAlloc(_groundCheckTranform.position, _groundCheckSize, 0, Vector2.down, _groundHit, 0, _groundLayerMask) > 0;
     }
 
@@ -205,19 +210,23 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (GameManager.Instance.CollectableLayer == (GameManager.Instance.CollectableLayer | (1 << collision.gameObject.layer)))
+        if (collision.gameObject.layer == 11) // Collectable
         {
             Collect(collision);
             return;
         }
 
-        if (GameManager.Instance.TrapsLayer == (GameManager.Instance.TrapsLayer | (1 << collision.gameObject.layer)))
+        if (collision.gameObject.layer == 13) // Traps
         {
             collision.GetComponent<TrapsBase>().OnCollide(gameObject);
             return;
         }
-
-        if (GameManager.Instance.LevelLayer == (GameManager.Instance.LevelLayer | (1 << collision.gameObject.layer)))
+        if (collision.gameObject.layer == 9) // Bullets
+        {
+            Hit(collision);
+            return;
+        }
+        if (collision.gameObject.layer == 12) // NextLevel
         {
             if (PlayerPrefs.GetInt("CorruptedSilver") < PlayerPrefs.GetInt("CorruptedSilver") + _corrupedCoins)
                 PlayerPrefs.SetInt("CorruptedSilver", PlayerPrefs.GetInt("CorruptedSilver") + _corrupedCoins);

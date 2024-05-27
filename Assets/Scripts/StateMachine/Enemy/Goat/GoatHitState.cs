@@ -7,7 +7,7 @@ public class GoatHitState : EnemyBaseState
     bool _isHitting;
     float _defaultGroundCheckTime = 0.2f;
 
-    GoatBehavior _behavior;
+    DragoBehavior _behavior;
     EnemyStateManager _stateManager;
 
     public GoatHitState(EnemyController controller) : base(controller) { }
@@ -37,7 +37,7 @@ public class GoatHitState : EnemyBaseState
     void Initialize(EnemyStateManager enemy)
     {
         _stateManager = enemy;
-        _behavior = (GoatBehavior)_controller.EnemyBehavior;
+        _behavior = (DragoBehavior)_controller.EnemyBehavior;
     }
 
     public override void Update()

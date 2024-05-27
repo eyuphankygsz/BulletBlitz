@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class HorizontalGateTrap : TrapsBase
 {
-    private float _startX;
+    private float _startPos;
     private int _direction;
     private bool _isActive = false, _stopped = true;
     [SerializeField] private float _speed;
-    [SerializeField] private float _activatedX;
+    [SerializeField] private float _activatedPos;
+    [SerializeField] private bool _vertical;
 
     private void Awake()
     {
-        _startX = transform.position.x;
+        _startPos = (_vertical ? transform.position.y : transform.position.x);
     }
     public override void OnCollide(GameObject affected)
     {
@@ -21,39 +22,52 @@ public class HorizontalGateTrap : TrapsBase
     public void TrapActivity()
     {
         _stopped = false;
-        _direction = _isActive ? Mathf.RoundToInt(Mathf.Sign(_activatedX - transform.position.x)) : Mathf.RoundToInt(Mathf.Sign(_startX - transform.position.x));
+        _direction = _isActive ? Mathf.RoundToInt(Mathf.Sign(_activatedPos - transform.position.x)) : Mathf.RoundToInt(Mathf.Sign(_startPos - transform.position.x));
     }
     private void Update()
     {
         if (_stopped) return;
 
-        transform.Translate(new Vector3(_speed * _direction, 0, 0) * Time.deltaTime);
+        if (_vertical)
+            transform.Translate(new Vector3(0, _speed * _direction, 0) * Time.deltaTime);
+        else
+            transform.Translate(new Vector3(_speed * _direction, 0, 0) * Time.deltaTime);
 
+        float pos = (_vertical ? transform.position.y : transform.position.x);
         if (_isActive)
         {
-            if ((_direction == 1 && transform.position.x > _activatedX) || (_direction == -1 && transform.position.x < _activatedX))
+
+            if ((_direction == 1 && pos > _activatedPos) || (_direction == -1 && pos < _activatedPos))
             {
                 _stopped = true;
-                transform.position = new Vector3(_activatedX, transform.position.y, transform.position.z);
+                if (_vertical)
+                    transform.position = new Vector3(transform.position.x, _activatedPos, transform.position.z);
+                else
+                    transform.position = new Vector3(_activatedPos, transform.position.y, transform.position.z);
+
             }
         }
-        else if ((_direction == 1 && transform.position.x > _startX) || (_direction == -1 && transform.position.x < _startX))
+        else if ((_direction == 1 && pos > _startPos) || (_direction == -1 && pos < _startPos))
         {
             _stopped = true;
-            transform.position = new Vector3(_startX, transform.position.y, transform.position.z);
+            if (_vertical)
+                transform.position = new Vector3(transform.position.x, _startPos, transform.position.z);
+            else
+                transform.position = new Vector3(_startPos, transform.position.y, transform.position.z);
         }
     }
     public override void TrapActive()
     {
         _isActive = true;
         _stopped = false;
-        _direction = Mathf.RoundToInt(Mathf.Sign(_activatedX - transform.position.x));
+
+        _direction = Mathf.RoundToInt(Mathf.Sign(_activatedPos - (_vertical ? transform.position.y : transform.position.x)));
     }
 
     public override void TrapDeactive()
     {
         _isActive = false;
         _stopped = false;
-        _direction = Mathf.RoundToInt(Mathf.Sign(_startX - transform.position.x));
+        _direction = Mathf.RoundToInt(Mathf.Sign(_startPos - (_vertical ? transform.position.y : transform.position.x)));
     }
 }

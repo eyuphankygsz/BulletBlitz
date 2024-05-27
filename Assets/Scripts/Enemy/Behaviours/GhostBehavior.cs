@@ -1,14 +1,14 @@
 using UnityEditor;
 using UnityEngine;
 
-public class CrowBehavior : MonoBehaviour, EnemyBehaviorBase
+public class GhostBehavior : MonoBehaviour, EnemyBehaviorBase
 {
     EnemyController _controller;
 
-    public CrowIdleState IdleState { get; private set; }
-    public CrowAttackState AttackState { get; private set; }
-    public CrowHitState HitState { get; private set; }
-    public CrowDeadState DeadState { get; private set; }
+    public GhostIdleState IdleState { get; private set; }
+    public GhostAttackState AttackState { get; private set; }
+    public GhostHitState HitState { get; private set; }
+    public GhostDeadState DeadState { get; private set; }
 
     public EnemyBaseState StartState()
     {
@@ -19,10 +19,10 @@ public class CrowBehavior : MonoBehaviour, EnemyBehaviorBase
     {
         _controller = controller;
 
-        IdleState = new CrowIdleState(controller);
-        AttackState = new CrowAttackState(controller);
-        HitState = new CrowHitState(controller);
-        DeadState = new CrowDeadState(controller);
+        IdleState = new GhostIdleState(controller);
+        AttackState = new GhostAttackState(controller);
+        HitState = new GhostHitState(controller);
+        DeadState = new GhostDeadState(controller);
     }
 
     public void OnDrawGizmos()

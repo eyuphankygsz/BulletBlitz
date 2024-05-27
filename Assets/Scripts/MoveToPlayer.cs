@@ -14,8 +14,8 @@ public class MoveToPlayer : MonoBehaviour
     private void OnEnable()
     {
         _timer = .5f;
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         GetComponent<Collider2D>().isTrigger = false;
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
     }
 
     // Update is called once per frame
@@ -34,6 +34,6 @@ public class MoveToPlayer : MonoBehaviour
         }
         Vector3 direction = _target.position - transform.position;
         direction.Normalize();
-        transform.Translate(direction * 3 * Time.deltaTime, Space.World);
+        transform.Translate(direction * 8 * Time.deltaTime, Space.World);
     }
 }
