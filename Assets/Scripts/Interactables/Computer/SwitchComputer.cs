@@ -5,12 +5,14 @@ public sealed class SwitchComputer : ComputerBehaviorBase
 {
     [SerializeField] private bool _computerDeactive;
     [SerializeField] private UnityEvent[] _deactiveEvent;
-
+    [SerializeField] private bool _enabled;
     private void Start()
     {
         if (_deactivateEvents != null)
             for (int i = 0; i < _deactivateEvents.Length; i++)
                 _deactiveEvent[i].Invoke();
+
+        ComputerSettings(_enabled);
     }
     public override bool GrantAction()
     {
@@ -20,7 +22,8 @@ public sealed class SwitchComputer : ComputerBehaviorBase
     {
         if (_computerDeactive) return;
 
-        ComputerSettings(true);
+        _enabled = !_enabled;
+        ComputerSettings(_enabled);
         for (int i = 0; i < _activateEvents.Length; i++)
             _activateEvents[i].Invoke();
     }

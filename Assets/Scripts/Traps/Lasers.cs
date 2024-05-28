@@ -54,9 +54,7 @@ public class Lasers : MonoBehaviour
             _timerCoroutine = StartCoroutine(WaitPortal());
         }
         else
-        {
             OpenCloseHandler();
-        }
     }
     private void OpenCloseHandler()
     {

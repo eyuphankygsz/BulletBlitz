@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 8902963214026360731}
   - component: {fileID: 541514855700101956}
   m_Layer: 7
-  m_Name: Enemy_Goat
+  m_Name: Enemy_Drago
   m_TagString: Goat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

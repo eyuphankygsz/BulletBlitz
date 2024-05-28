@@ -65,6 +65,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _computerDeactive: 0
+  _deactiveEvent: []
+  _enabled: 0
 --- !u!212 &3584667835541722430
 SpriteRenderer:
   m_ObjectHideFlags: 0

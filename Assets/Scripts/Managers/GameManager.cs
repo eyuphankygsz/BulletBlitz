@@ -92,8 +92,8 @@ public class GameManager : MonoBehaviour
         int scene = SceneManager.GetActiveScene().buildIndex;
         if (PlayerPrefs.HasKey("Upgrade_Level" + scene) || PlayerPrefs.GetInt("Level") % 5 != 0)
             GameObject.FindGameObjectWithTag("LevelLazer").GetComponent<Lasers>().CertainActivation(true);
-        else
-            ShowUpgrade();
+        //else
+        //    ShowUpgrade();
     }
     public void EndGameAfterUpgrade()
     {
