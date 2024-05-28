@@ -8,8 +8,8 @@ public sealed class SwitchComputer : ComputerBehaviorBase
     [SerializeField] private bool _enabled;
     private void Start()
     {
-        if (_deactivateEvents != null)
-            for (int i = 0; i < _deactivateEvents.Length; i++)
+        if (_deactiveEvent != null)
+            for (int i = 0; i < _deactiveEvent.Length; i++)
                 _deactiveEvent[i].Invoke();
 
         ComputerSettings(_enabled);

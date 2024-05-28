@@ -133,8 +133,6 @@ public class GhostAttackState : EnemyBaseState
         float y = _controller.transform.position.y;
         //float y = Mathf.Clamp(y, _minY, _maxY);
 
-        Vector3 clampedPos = new Vector3(Mathf.Clamp(x, _minX, _maxX), Mathf.Clamp(y, _minY, _maxY), 0);
-        _controller.transform.position = clampedPos;
         _controller.RB.velocity = direction * horizontal;
 
 
