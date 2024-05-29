@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private bool _isTrigger;
 
     [SerializeField] private Transform _holdPoint;
+    
 
     //--------------------------------------
 
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour
     private float _hitCooldownTimer;
     private float _colorTime;
     private int _corrupedCoins = 0;
+    public int GetCorruptedSilver { get { return _corrupedCoins; } }
     public Collider2D HitObject { get; private set; }
 
 
@@ -224,13 +226,6 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == 9) // Bullets
         {
             Hit(collision);
-            return;
-        }
-        if (collision.gameObject.layer == 12) // NextLevel
-        {
-            if (PlayerPrefs.GetInt("CorruptedSilver") < PlayerPrefs.GetInt("CorruptedSilver") + _corrupedCoins)
-                PlayerPrefs.SetInt("CorruptedSilver", PlayerPrefs.GetInt("CorruptedSilver") + _corrupedCoins);
-            GameManager.Instance.NextScene();
             return;
         }
     }
