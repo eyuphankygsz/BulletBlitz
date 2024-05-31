@@ -31,7 +31,6 @@ public class WitchIdleState : EnemyBaseState
         _controller.CurrentState = _currentState;
         SetStats();
 
-        Debug.Log("Idle");
     }
 
     void Initialize(EnemyStateManager enemy)

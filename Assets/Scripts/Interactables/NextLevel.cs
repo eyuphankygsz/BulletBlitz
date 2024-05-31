@@ -26,8 +26,6 @@ public class NextLevel : Interactable
 
         PlayerPrefs.SetInt("CorruptedSilver", PlayerPrefs.GetInt("CorruptedSilver") + GameManager.Instance.Player.GetComponent<PlayerController>().GetCorruptedSilver);
 
-        Debug.Log(PlayerPrefs.GetInt("CorruptedSilver"));
-
         if (string.IsNullOrEmpty(_sceneName))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         else

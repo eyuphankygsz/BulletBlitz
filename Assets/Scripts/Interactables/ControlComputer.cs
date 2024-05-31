@@ -5,7 +5,6 @@ using UnityEngine.Events;
 public class ControlComputer : Interactable
 {
     private ComputerBehaviorBase _computerBehaviour;
-
     private void Awake()
     {
         _computerBehaviour = GetComponent<ComputerBehaviorBase>();

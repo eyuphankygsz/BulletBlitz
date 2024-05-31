@@ -40,11 +40,11 @@ public class PlayerHitState : PlayerBaseState
         if (_controller.HitObject.tag == "Bullet")
             _controller.HitObject.gameObject.SetActive(false);
 
-        Debug.Log("WHY");
         _controller.Animator.SetTrigger("JumpTrigger");
         _controller.Animator.SetBool("OnGround", false);
 
         int directionX = _controller.transform.position.x - _controller.HitObject.transform.position.x >= 0 ? 1 : -1;
+        _controller.RB.velocity = Vector2.zero;
         _controller.StartJump(directionX);
     }
 

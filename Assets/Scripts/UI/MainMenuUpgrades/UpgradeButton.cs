@@ -72,13 +72,10 @@ public class UpgradeButton : MonoBehaviour
     {
         string upgradeObjName = PlayerPrefs.GetString("UpgradeWeapon");
 
-        Debug.Log("Level:" + PlayerPrefs.GetInt(upgradeObjName + _upgradeName) + "  Length: " + _upgradeListDic[upgradeObjName].Length);
-
         if (PlayerPrefs.GetInt(upgradeObjName + _upgradeName) == _upgradeListDic[upgradeObjName].Length)
             return;
 
         int corruptedSilver = PlayerPrefs.GetInt("CorruptedSilver");
-        Debug.Log("PRICE: " + _upgradeListDic[upgradeObjName][PlayerPrefs.GetInt(upgradeObjName + _upgradeName)].Price);
 
         if (_upgradeListDic[upgradeObjName][PlayerPrefs.GetInt(upgradeObjName + _upgradeName)].Price > corruptedSilver)
             return;
@@ -92,11 +89,9 @@ public class UpgradeButton : MonoBehaviour
                     + _upgradeListDic[upgradeObjName][PlayerPrefs.GetInt(upgradeObjName + _upgradeName)].IntAmount);
                 break;
             case UpgradeType.Float:
-                Debug.Log(PlayerPrefs.GetFloat(upgradeObjName + _upgradeName + "Value"));
                 PlayerPrefs.SetFloat(upgradeObjName + _upgradeName + "Value",
                     PlayerPrefs.GetFloat(upgradeObjName + _upgradeName + "Value")
                     + _upgradeListDic[upgradeObjName][PlayerPrefs.GetInt(upgradeObjName + _upgradeName)].FloatAmount);
-                Debug.Log(PlayerPrefs.GetFloat(upgradeObjName + _upgradeName + "Value"));
 
                 break;
             case UpgradeType.String:

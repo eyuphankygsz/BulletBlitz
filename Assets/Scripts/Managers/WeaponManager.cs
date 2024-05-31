@@ -56,7 +56,6 @@ public class WeaponManager : MonoBehaviour
     private Weapon SelectWeapon()
     {
         string currentWeapon = PlayerPrefs.GetString("CurrentWeapon");
-        Debug.Log(currentWeapon);
         _weaponDictionary[currentWeapon].SetActive(true);
         return _weaponDictionary[currentWeapon].GetComponent<Weapon>();
     }

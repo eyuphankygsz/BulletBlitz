@@ -84,19 +84,12 @@ public class DragoShootState : EnemyBaseState
         if (_bulletStat.Speed.Length > 1)
             _currentSkill = _bulletCounter % _bulletStat.Speed.Length;
 
-        Debug.Log(_controller.AttackPoint.position);
-        Debug.Log(_controller.Player.position);
-        Debug.Log(_controller.EnemyStat.AttackDamage);
-        Debug.Log(_bulletStat.Damage[_currentSkill]);
-        Debug.Log(_controller.EnemyStat.BulletSpeed);
-        Debug.Log(_bulletStat.Speed[_currentSkill]);
-
         _bullets[_bulletCounter % _bulletStat.MaxBullet].Setup(
             _controller.AttackPoint.position,
             _controller.Player.position,
             _controller.EnemyStat.AttackDamage + _bulletStat.Damage[_currentSkill],
             _controller.EnemyStat.BulletSpeed + _bulletStat.Speed[_currentSkill],
-            "Goat",
+            "Drago",
             canActivateSkill: false,
             otherBullets: null
             );

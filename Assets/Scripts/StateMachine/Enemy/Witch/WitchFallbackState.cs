@@ -36,7 +36,6 @@ public class WitchFallbackState : EnemyBaseState
         float xScale = _controller.RB.velocity.x < 0 ? Mathf.Abs(_controller.transform.localScale.x) : _controller.RB.velocity.x > 0 ? -Mathf.Abs(_controller.transform.localScale.x) : _controller.transform.localScale.x;
         _controller.transform.localScale = new Vector3(xScale, _controller.transform.localScale.y, _controller.transform.localScale.z);
         _fallbackTimer = _defaultFallbackTime;
-        Debug.Log("Fallback");
     }
 
     void Initialize(EnemyStateManager enemy)

@@ -33,7 +33,6 @@ public class WitchFlyAttackState : EnemyBaseState
         _controller.RB.gravityScale = 0;
         _controller.RB.velocity = Vector2.zero;
         direction = (_controller.Player.position - _controller.transform.position).normalized;
-        Debug.Log("FlyAttack");
     }
     void Initialize(EnemyStateManager enemy)
     {

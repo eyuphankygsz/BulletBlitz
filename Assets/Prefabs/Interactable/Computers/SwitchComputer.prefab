@@ -65,6 +65,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _activeSFX: {fileID: 8300000, guid: b8984bbcea0ee004e947bb94f446d157, type: 3}
+  _deactiveSFX: {fileID: 8300000, guid: 253db22e1a141764fabc1679c4d38c6a, type: 3}
+  _lockedSFX: {fileID: 8300000, guid: e4bd6f75f624ded48a004386f18ac8ab, type: 3}
   _computerDeactive: 0
   _deactiveEvent: []
   _enabled: 0

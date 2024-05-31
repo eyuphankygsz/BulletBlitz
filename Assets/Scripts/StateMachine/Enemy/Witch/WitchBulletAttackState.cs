@@ -43,7 +43,6 @@ public class WitchBulletAttackState : EnemyBaseState
         _controller.RB.velocity = Vector3.zero;
 
         _shootCounter = 0;
-        Debug.Log("BulletAttack");
     }
     public override void Update()
     {
@@ -111,14 +110,14 @@ public class WitchBulletAttackState : EnemyBaseState
         for (int i = 0; i < shootCount; i++)
         {
             currentBulletPos = _controller.transform.position + new Vector3(2 * Mathf.Cos(degree * i * Mathf.Deg2Rad), 2 * Mathf.Sin(degree * i * Mathf.Deg2Rad), 0);
-            Debug.Log(currentBulletPos);
+
 
             _bullets[_bulletCounter % _bulletStat.MaxBullet].Setup(
                 currentBulletPos,
                 _controller.transform.position + new Vector3(4 * Mathf.Cos(degree * i * Mathf.Deg2Rad), 4 * Mathf.Sin(degree * i * Mathf.Deg2Rad), 0),
                 _controller.EnemyStat.AttackDamage + _bulletStat.Damage[_currentSkill],
                 _controller.EnemyStat.BulletSpeed + _bulletStat.Speed[_currentSkill],
-                "Goat",
+                "Witch",
                 canActivateSkill: false,
                 otherBullets: null
                 );
@@ -126,7 +125,7 @@ public class WitchBulletAttackState : EnemyBaseState
             _shootTimer = _controller.BulletStat.Timer[(_currentSkill + 1) % _bulletStat.Timer.Length];
 
         }
-        Debug.Log("Created");
+
     }
     void Shoot2()
     {
@@ -143,7 +142,7 @@ public class WitchBulletAttackState : EnemyBaseState
                 _controller.transform.position + new Vector3(4 * Mathf.Cos(degree * i * Mathf.Deg2Rad), 4 * Mathf.Sin(degree * i * Mathf.Deg2Rad), 0),
                 _controller.EnemyStat.AttackDamage + _bulletStat.Damage[_currentSkill],
                 _controller.EnemyStat.BulletSpeed + _bulletStat.Speed[_currentSkill] + 2,
-                "Goat",
+                "Witch",
                 canActivateSkill: false,
                 otherBullets: null
                 );
@@ -151,7 +150,7 @@ public class WitchBulletAttackState : EnemyBaseState
             _shootTimer = _controller.BulletStat.Timer[(_currentSkill + 1) % _bulletStat.Timer.Length];
 
         }
-        Debug.Log("Created");
+
     }
     private void LookAtPlayer()
     {

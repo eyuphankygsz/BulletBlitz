@@ -40,7 +40,6 @@ public class UpgradePanel : MonoBehaviour
     {
         for (int i = 0; i < _gunButtons.Length; i++)
         {
-            Debug.Log(_gunButtons[i].name);
             if (PlayerPrefs.GetString(_gunButtons[i].name) != "Bought")
             {
                 _gunButtons[i].transform.GetChild(0).GetComponent<Image>().sprite = _lockSprite;

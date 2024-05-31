@@ -117,6 +117,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _deactivateEvents: []
+  _pressedSFX: {fileID: 8300000, guid: 088334160e1849748ace05018cfdd22c, type: 3}
+  _unpressedSFX: {fileID: 8300000, guid: 4da1630570053f54997e7c6178837afc, type: 3}
 --- !u!61 &7328974616054472601
 BoxCollider2D:
   m_ObjectHideFlags: 0

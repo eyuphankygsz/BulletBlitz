@@ -52,6 +52,9 @@ MonoBehaviour:
   _bothWayEvents: 0
   _activateEvents: []
   _deactivateEvents: []
+  _activeSFX: {fileID: 8300000, guid: b8984bbcea0ee004e947bb94f446d157, type: 3}
+  _deactiveSFX: {fileID: 8300000, guid: 253db22e1a141764fabc1679c4d38c6a, type: 3}
+  _lockedSFX: {fileID: 0}
   _checkSeconds: 6
   _lineDelay: 0
   _timerCanvas: {fileID: 1108089556477020571}

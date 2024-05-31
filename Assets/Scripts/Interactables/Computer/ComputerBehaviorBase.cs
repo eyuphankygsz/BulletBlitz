@@ -8,6 +8,8 @@ public abstract class ComputerBehaviorBase : MonoBehaviour
     [SerializeField] protected bool _bothWayEvents;
     [SerializeField] protected UnityEvent[] _activateEvents, _deactivateEvents;
 
+    [SerializeField] protected AudioClip _activeSFX, _deactiveSFX, _lockedSFX;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();

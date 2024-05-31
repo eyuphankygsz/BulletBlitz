@@ -17,6 +17,7 @@ public sealed class TimerComputer : ComputerBehaviorBase
     {
         _isActive = true;
         _animator.SetBool("IsActive", _isActive);
+        AudioManager.PlayAudio(_activeSFX);
 
         if (_computerRoutine != null)
             StopCoroutine(_computerRoutine);
@@ -34,6 +35,7 @@ public sealed class TimerComputer : ComputerBehaviorBase
     }
     protected override void OnDeactivate()
     {
+        AudioManager.PlayAudio(_deactiveSFX);
         _timerCanvas.SetActive(false);
         return;
     }

@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
     private int _corrupedCoins = 0;
     public int GetCorruptedSilver { get { return _corrupedCoins; } }
     public Collider2D HitObject { get; private set; }
+    [SerializeField] private AudioClip _coinSFX;
 
 
     //----------------------------
@@ -207,6 +208,7 @@ public class PlayerController : MonoBehaviour
         if (collider.tag == "CorruptedSilver")
         {
             _corrupedCoins++;
+            AudioManager.PlayAudio(_coinSFX);
             collider.gameObject.SetActive(false);
         }
     }

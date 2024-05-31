@@ -57,7 +57,7 @@ public class GhostAttackState : EnemyBaseState
         float xScale = _controller.RB.velocity.x < 0 ? Mathf.Abs(_controller.transform.localScale.x) : _controller.RB.velocity.x > 0 ? -Mathf.Abs(_controller.transform.localScale.x) : _controller.transform.localScale.x;
         _controller.transform.localScale = new Vector3(xScale, _controller.transform.localScale.y, _controller.transform.localScale.z);
         Collider2D collider = _controller.IsPlayerAhead();
-        if (_controller.IsEnemyAhead("Crow"))
+        if (_controller.IsEnemyAhead("Ghost"))
         {
             if (!_moveAway)
             {

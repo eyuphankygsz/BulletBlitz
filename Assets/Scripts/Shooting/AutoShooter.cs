@@ -40,7 +40,6 @@ public class AutoShooter : MonoBehaviour
         _currentShootTimer = _weaponStat.Timer[0];
 
         CreateBullets();
-        Debug.Log(WeaponStat);
         _controller.SetStats();
     }
 
@@ -103,7 +102,6 @@ public class AutoShooter : MonoBehaviour
     void ShootTimer()
     {
         _currentShootTimer -= Time.deltaTime;
-        Debug.Log(_currentShootTimer);
         if (_currentShootTimer <= 0 && !_isShooting)
         {
             if (_closestEnemy == null)
@@ -160,8 +158,6 @@ public class AutoShooter : MonoBehaviour
         _firePoint = weapon.ShootPoint;
         _weapon.AnimatorSc.SetFloat("ShootSpeed", 1 + (_weaponStat.Speed[0] / 10));
         _bulletPrefab = WeaponStat.Projectile.GetComponent<Bullet>();
-
-        Debug.Log(weapon);
     }
     public void RefreshEnemies()
     {

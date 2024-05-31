@@ -13,20 +13,18 @@ public class TheButton : Interactable
     [SerializeField] private UnityEvent[] _activateEvents, _deactivateEvents;
     private List<Collider2D> _colliders = new List<Collider2D>();
     Collider2D oldcollider;
+    [SerializeField] private AudioClip _pressedSFX, _unpressedSFX;
 
     private void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
     }
-    public override void OnEnabled()
-    {
-        Debug.Log("Deneme");
-    }
+    public override void OnEnabled() { }
 
     private void OnActivate()
     {
         _isActive = true;
-
+        AudioManager.PlayAudio(_pressedSFX);
         for (int i = 0; i < _activateEvents.Length; i++)
             _activateEvents[i].Invoke();
 
@@ -39,6 +37,7 @@ public class TheButton : Interactable
     private void OnDeactivate()
     {
         _isActive = false;
+        AudioManager.PlayAudio(_unpressedSFX);
 
         for (int i = 0; i < _deactivateEvents.Length; i++)
             _deactivateEvents[i].Invoke();
@@ -66,9 +65,9 @@ public class TheButton : Interactable
     }
     public override void TriggerExit(Collider2D collider)
     {
-        if (_colliders.Contains(collider)) 
+        if (_colliders.Contains(collider))
             _colliders.Remove(collider);
-     
+
         if (!_isActive || _colliders.Count > 0)
             return;
 

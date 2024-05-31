@@ -473,6 +473,7 @@ MonoBehaviour:
   _bodyParts:
   - {fileID: 4767595321612378185}
   _defaultHitCooldownTime: 3
+  _coinSFX: {fileID: 8300000, guid: 7d826fb80cfa52b448876f747685018e, type: 3}
   WeaponParent: {fileID: 2660881759525661634}
   _metalSounds:
   - {fileID: 8300000, guid: 4cd59570778dd524baab7d16f43ecea3, type: 3}

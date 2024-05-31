@@ -24,7 +24,7 @@ public class BuyGun : MonoBehaviour
         {
             PlayerPrefs.SetInt("CorruptedSilver", corruptedSilvers - _gunPrices[name]);
             _corruptedText.text = PlayerPrefs.GetInt("CorruptedSilver").ToString();
-            Debug.Log("Name: " + name);
+
             PlayerPrefs.SetString(name, "Bought");
         }
 

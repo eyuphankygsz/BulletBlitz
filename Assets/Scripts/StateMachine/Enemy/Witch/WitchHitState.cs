@@ -34,7 +34,7 @@ public class WitchHitState : EnemyBaseState
 
         Vector2 direction = (_controller.HitObject.transform.position - _controller.transform.position).normalized;
         _controller.RB.AddForce(direction * 80);
-        Debug.Log("Hit");
+
     }
     void Initialize(EnemyStateManager enemy)
     {
