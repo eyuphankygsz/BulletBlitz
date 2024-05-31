@@ -10,7 +10,6 @@ public class WeaponManager : MonoBehaviour
 
     private GameObject _playerWeaponParent;
     private Dictionary<string, GameObject> _weaponDictionary = new Dictionary<string, GameObject>();
-    private GameObject _selectedWeapon;
 
     void Awake()
     {
@@ -22,25 +21,23 @@ public class WeaponManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         if (!PlayerPrefs.HasKey("CurrentWeapon"))
+        {
             PlayerPrefs.SetString("CurrentWeapon", "Pistol");
-
+            PlayerPrefs.SetString("Pistol", "Bought");
+        }
         for (int i = 0; i < _weapons.Length; i++)
             _weapons[i].SetupGun();
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+            PlayerPrefs.SetInt("CorruptedSilver",PlayerPrefs.GetInt("CorruptedSilver") + 1000);
     }
     public static void Setup(AutoShooter shooter)
     {
         instance.SetWeapons(shooter);
     }
-    public static void Setup(Transform weaponsParent)
-    {
-        for (int i = 0; i < weaponsParent.childCount; i++)
-        {
-            weaponsParent.GetChild(i).gameObject.SetActive(false);
-            if (weaponsParent.GetChild(i).gameObject.name == PlayerPrefs.GetString("CurrentWeapon"))
-                weaponsParent.GetChild(i).gameObject.SetActive(true);
-        }
 
-    }
 
     private void SetWeapons(AutoShooter shooter)
     {

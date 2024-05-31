@@ -1,7 +1,5 @@
 using EditorAttributes;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class AutoShooter : MonoBehaviour
@@ -74,7 +72,7 @@ public class AutoShooter : MonoBehaviour
                 if (newClose < Vector2.Distance(_closestEnemy.position, transform.position))
                     _closestEnemy = _enemies[i].transform;
             }
-        
+
         if (Vector2.Distance(_closestEnemy.position, transform.position) > 5f)
             _closestEnemy = null;
 
@@ -103,6 +101,7 @@ public class AutoShooter : MonoBehaviour
     void ShootTimer()
     {
         _currentShootTimer -= Time.deltaTime;
+        Debug.Log(_currentShootTimer);
         if (_currentShootTimer <= 0 && !_isShooting)
         {
             if (_closestEnemy == null)
@@ -111,14 +110,20 @@ public class AutoShooter : MonoBehaviour
                 return;
             }
             _isShooting = true;
-            _weapon._animator.SetTrigger("Shoot");
+            _weapon.AnimatorSc.SetTrigger("Shoot");
         }
     }
 
     public void Shoot()
     {
-        if(_closestEnemy != null)
-        EnemySoundHolder.Instance.PlayAudio(EnemySoundHolder.Instance.PlayerSFX.Clips["Shoot"], false);
+        if (_closestEnemy != null)
+            EnemySoundHolder.Instance.PlayAudio(EnemySoundHolder.Instance.PlayerSFX.Clips["Shoot"], false);
+        else
+        {
+            _currentShootTimer = WeaponStat.Timer[_currentSkill % _weaponStat.Timer.Length];
+            _isShooting = false;
+            return;
+        }
 
         if (_weaponStat.Speed.Length > 1)
             _currentSkill = _bulletCounter % _weaponStat.Speed.Length;
@@ -145,18 +150,18 @@ public class AutoShooter : MonoBehaviour
         _bullets = new Bullet[_weaponStat.MaxBullet];
 
         for (int i = 0; i < _weaponStat.MaxBullet; i++)
-        {
             _bullets[i] = Instantiate(_bulletPrefab, new Vector3(-100, -100, 0), Quaternion.identity);
-        }
     }
 
     public void SetWeapon(Weapon weapon)
     {
         _weapon = weapon;
-        _weaponStat = weapon._weaponStatSO;
-        _firePoint = weapon._shootPoint;
-
+        _weaponStat = weapon.WeaponStatSO;
+        _firePoint = weapon.ShootPoint;
+        _weapon.AnimatorSc.SetFloat("ShootSpeed", 1 + (_weaponStat.Speed[0] / 10));
         _bulletPrefab = WeaponStat.Projectile.GetComponent<Bullet>();
+
+        Debug.Log(weapon);
     }
     public void RefreshEnemies()
     {

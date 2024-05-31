@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f134ecb3a32614192679979837719f, type: 3}
+  m_Name: AssaultRifle
+  m_EditorClassIdentifier: 
+  GunSprite: {fileID: 21300000, guid: a1c7cb19477438849bb1b9352ff96b35, type: 2}
+  Projectile: {fileID: 925485227097980922, guid: e54d618e7384b4643b5d15b05089eb30, type: 3}
+  Speed:
+  - 0
+  Damage: 00000000
+  Timer:
+  - 0
+  MaxBullet: 0
+  AdditionalHealth: 0
+  ReloadTime: 0
+  _baseSpeed:
+  - 6
+  _baseDamage: 0a000000
+  _baseTimer:
+  - 2
+  _baseMaxBullet: 14
+  _baseAdditionalHealth: 10
+  _baseReloadTime: 3

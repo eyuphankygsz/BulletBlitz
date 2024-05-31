@@ -1,30 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private Transform _weaponTransform;
+    [SerializeField] private TextMeshProUGUI _corruptedText;
     public void Start()
     {
+        Application.targetFrameRate = 60;
         ChangeWeapon();
     }
     public void ChangeWeapon()
     {
-        WeaponManager.Setup(_weaponTransform);
+        for (int i = 0; i < _weaponTransform.childCount; i++)
+        {
+            _weaponTransform.GetChild(i).gameObject.SetActive(false);
+            if (_weaponTransform.GetChild(i).gameObject.name == PlayerPrefs.GetString("CurrentWeapon"))
+                _weaponTransform.GetChild(i).gameObject.SetActive(true);
+        }
+
+    }
+    private void OnEnable()
+    {
+        _corruptedText.text = PlayerPrefs.GetInt("CorruptedSilver").ToString();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            PlayerPrefs.SetString("CurrentWeapon",
-                PlayerPrefs.GetString("CurrentWeapon") == "Pistol" ? "AssaultRifle" : "Pistol"
-                );
-            ChangeWeapon();
-        }
-    }
     public void StartGame()
     {
         PanelManager.Instance.ClosePanel(PanelManager.Instance.Panels["MainPanel"]);

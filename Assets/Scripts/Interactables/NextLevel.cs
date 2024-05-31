@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class NextLevel : Interactable
 {
     private bool _done;
     [SerializeField] private string _sceneName;
+    [SerializeField] private UnityEvent _events;
 
     public override void OnEnabled()
     {
@@ -16,9 +16,13 @@ public class NextLevel : Interactable
     public override bool TriggerEnter(out Interactable interactable, Collider2D collider)
     {
         interactable = null;
+
         if (_done)
             return false;
         _done = true;
+
+        if (_events != null)
+            _events.Invoke();
 
         PlayerPrefs.SetInt("CorruptedSilver", PlayerPrefs.GetInt("CorruptedSilver") + GameManager.Instance.Player.GetComponent<PlayerController>().GetCorruptedSilver);
 
@@ -30,6 +34,10 @@ public class NextLevel : Interactable
             SceneManager.LoadScene(_sceneName);
 
         return false;
+    }
+    public void MainMenu()
+    {
+        PanelManager.Instance.MainMenuPanel();
     }
     public override void TriggerExit(Collider2D collider)
     {

@@ -18,6 +18,7 @@ public class PlayerGroundState : PlayerBaseState
             _player = player;
 
         _controller.CurrentState = _stateEnum;
+        _controller.Animator.ResetTrigger("JumpTrigger");
         _controller.Animator.SetBool("OnGround", true);
 
     }

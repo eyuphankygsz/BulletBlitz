@@ -51,6 +51,6 @@ MonoBehaviour:
     IntAmount: 0
     StringValue: 
   - Price: 6500
-    FloatAmount: 0
+    FloatAmount: 0.5
     IntAmount: 0
     StringValue: 

@@ -44,7 +44,7 @@ public class WeaponStat : ScriptableObject
 
         Timer = new float[_baseTimer.Length];
         for (int i = 0; i < Timer.Length; i++)
-            Timer[i] = _baseTimer[i] + PlayerPrefs.GetFloat(name + "ShootSpeed" + "Value");
+            Timer[i] = _baseTimer[i] - PlayerPrefs.GetFloat(name + "ShootSpeed" + "Value");
 
         MaxBullet = _baseMaxBullet + PlayerPrefs.GetInt(name + "BulletCount" + "Value");
         ReloadTime = _baseReloadTime + PlayerPrefs.GetFloat(name + "ReloadSpeed" + "Value");

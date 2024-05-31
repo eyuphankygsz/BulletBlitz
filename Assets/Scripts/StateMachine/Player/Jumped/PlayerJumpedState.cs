@@ -26,7 +26,8 @@ public class PlayerJumpedState : PlayerBaseState
         if (_player == null)
             _player = player;
 
-        _controller.Animator.SetFloat("Jump", 0);
+        _controller.Animator.SetFloat("Jump", 0); 
+        _controller.Animator.SetTrigger("JumpTrigger");
         if (_controller.CurrentState == PlayerController.States.Ground)
             _isJumping = false;
 
@@ -59,7 +60,7 @@ public class PlayerJumpedState : PlayerBaseState
     {
         if (_controller.TryToChangeState(NewState(), _stateEnum))
             return;
-        _controller.Animator.SetFloat("Jump", _controller.YDirection, 0.1f, Time.deltaTime);
+        _controller.Animator.SetFloat("Jump", _controller.RB.velocity.y, 0.1f, Time.deltaTime);
 
         if (_controller.IsOnGround())
             _controller.TryToChangeState(_controller.GroundRootState, _stateEnum);

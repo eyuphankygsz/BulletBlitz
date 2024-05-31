@@ -8,8 +8,6 @@ public class UpgradeButton : MonoBehaviour
 {
 
     [SerializeField] private string _upgradeName;
-    [SerializeField] private string _upgradeObjName;
-    [SerializeField] private string _gemName;
     [SerializeField] private Color _deactiveLevelColor, _activeLevelColor;
     private Transform _weaponHolder;
     private Transform _levelHolder;
@@ -18,6 +16,8 @@ public class UpgradeButton : MonoBehaviour
     [SerializeField] private UpgradeList[] _upgradeList;
     Dictionary<string, UpgradeLister[]> _upgradeListDic;
     [SerializeField] private UpgradeType _upgradeType;
+
+    [SerializeField] private TextMeshProUGUI _corruptedText, _spaceGemText;
 
     public void Initialize()
     {
@@ -31,7 +31,7 @@ public class UpgradeButton : MonoBehaviour
     }
     public void Setup()
     {
-        string upgradeObjName = PlayerPrefs.GetString(_upgradeObjName);
+        string upgradeObjName = PlayerPrefs.GetString("UpgradeWeapon");
         int level = PlayerPrefs.GetInt(upgradeObjName + _upgradeName);
 
         for (int i = 0; i < _weaponHolder.childCount; i++)
@@ -65,16 +65,25 @@ public class UpgradeButton : MonoBehaviour
         for (int i = 0; i < weapons.Length; i++)
             weapons[i].SetupGun();
 
+        _corruptedText.text = PlayerPrefs.GetInt("CorruptedSilver").ToString();
+        _spaceGemText.text = PlayerPrefs.GetInt("SpaceGem").ToString();
     }
     private void Upgrade()
     {
-        string upgradeObjName = PlayerPrefs.GetString(_upgradeObjName);
+        string upgradeObjName = PlayerPrefs.GetString("UpgradeWeapon");
+
         Debug.Log("Level:" + PlayerPrefs.GetInt(upgradeObjName + _upgradeName) + "  Length: " + _upgradeListDic[upgradeObjName].Length);
+
         if (PlayerPrefs.GetInt(upgradeObjName + _upgradeName) == _upgradeListDic[upgradeObjName].Length)
             return;
 
-        int gem = PlayerPrefs.GetInt(_gemName);
+        int corruptedSilver = PlayerPrefs.GetInt("CorruptedSilver");
+        Debug.Log("PRICE: " + _upgradeListDic[upgradeObjName][PlayerPrefs.GetInt(upgradeObjName + _upgradeName)].Price);
 
+        if (_upgradeListDic[upgradeObjName][PlayerPrefs.GetInt(upgradeObjName + _upgradeName)].Price > corruptedSilver)
+            return;
+
+        PlayerPrefs.SetInt("CorruptedSilver", PlayerPrefs.GetInt("CorruptedSilver") - _upgradeListDic[upgradeObjName][PlayerPrefs.GetInt(upgradeObjName + _upgradeName)].Price);
         switch (_upgradeType)
         {
             case UpgradeType.Int:

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ public class PanelManager : MonoBehaviour
     [field: SerializeField] public EventTrigger InteractButton { get; private set; }
     [field: SerializeField] public EventTrigger SpecialButton { get; private set; }
     [field: SerializeField] public FixedJoystick Joystick { get; private set; }
+    [SerializeField] private TextMeshProUGUI _corruptedText, _spaceGemText;
     void Awake()
     {
         if (FindObjectsOfType<PanelManager>().Length > 1)
@@ -20,7 +22,8 @@ public class PanelManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        _corruptedText.text = PlayerPrefs.GetInt("CorruptedSilver").ToString();
+        _spaceGemText.text = PlayerPrefs.GetInt("SpaceGem").ToString();
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
@@ -48,7 +51,11 @@ public class PanelManager : MonoBehaviour
     {
         panel.SetActive(false);
     }
-
+    public void MainMenuPanel()
+    {
+        Panels["InGamePanel"].SetActive(false);
+        Panels["MainPanel"].SetActive(true);
+    }
     void SetButtons()
     {
         for (int i = 0; i < _buttons.Length; i++)
