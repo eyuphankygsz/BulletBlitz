@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private SliderListener[] _sliders;
     private List<AudioSource> _sources;
+    private AudioSource _bgm;
+    [SerializeField] private AudioClip _bgmMusic;
     private int _audioLine;
 
     void Awake()
@@ -32,6 +34,12 @@ public class AudioManager : MonoBehaviour
             for (int i = 0; i < _sliders.Length; i++)
                 _sliders[i].Initialize();
         }
+        _bgm = gameObject.AddComponent<AudioSource>();
+        _bgm.loop = true;
+        _bgm.outputAudioMixerGroup = _audioMixer.FindMatchingGroups("Music")[0];
+        _bgm.clip = _bgmMusic;
+        _bgm.Play();
+        
     }
 
     private void Initialize()

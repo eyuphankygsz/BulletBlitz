@@ -15,13 +15,13 @@ MonoBehaviour:
   GunSprite: {fileID: 1352400176, guid: 5ab292b5c6987444d8a2d22de6539d58, type: 3}
   Projectile: {fileID: 925485227097980922, guid: f5d5498c601467147b82ef017ce4a654, type: 3}
   Speed:
-  - 4.9
-  Damage: 10000000
+  - 3
+  Damage: 05000000
   Timer:
-  - 1.8
-  MaxBullet: 14
+  - 3
+  MaxBullet: 7
   AdditionalHealth: 5
-  ReloadTime: 2.4
+  ReloadTime: 2
   _baseSpeed:
   - 3
   _baseDamage: 05000000
@@ -30,3 +30,4 @@ MonoBehaviour:
   _baseMaxBullet: 7
   _baseAdditionalHealth: 5
   _baseReloadTime: 2
+  ShootSFX: {fileID: 8300000, guid: 6062822c6dcb7f44d961137caa876ffd, type: 3}

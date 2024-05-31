@@ -26,6 +26,8 @@ public class AutoShooter : MonoBehaviour
     private PlayerController _controller;
     private bool _isShooting;
     [SerializeField] private Transform _afterEnemiesTransform;
+
+    
     private void Awake()
     {
         _controller = GetComponent<PlayerController>();
@@ -116,9 +118,7 @@ public class AutoShooter : MonoBehaviour
 
     public void Shoot()
     {
-        if (_closestEnemy != null)
-            EnemySoundHolder.Instance.PlayAudio(EnemySoundHolder.Instance.PlayerSFX.Clips["Shoot"], false);
-        else
+        if (_closestEnemy == null)
         {
             _currentShootTimer = WeaponStat.Timer[_currentSkill % _weaponStat.Timer.Length];
             _isShooting = false;

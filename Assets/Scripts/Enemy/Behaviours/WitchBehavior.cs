@@ -9,7 +9,7 @@ public class WitchBehavior : MonoBehaviour, EnemyBehaviorBase
     public WitchBulletAttackState ShootState { get; private set; }
     public WitchFlyAttackState FlyAttack { get; private set; }
     public WitchHitState HitState { get; private set; }
-    public GoatDeadState DeadState { get; private set; }
+    public DragoDeadState DeadState { get; private set; }
 
 
     public void SetController(EnemyController controller)
@@ -21,7 +21,7 @@ public class WitchBehavior : MonoBehaviour, EnemyBehaviorBase
         FlyAttack = new WitchFlyAttackState(_controller);
         ShootState = new WitchBulletAttackState(_controller);
         HitState = new WitchHitState(_controller);
-        DeadState = new GoatDeadState(_controller);
+        DeadState = new DragoDeadState(_controller);
     }
 
     public void OnDrawGizmos()

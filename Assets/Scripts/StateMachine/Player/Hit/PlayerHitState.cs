@@ -5,7 +5,7 @@ public class PlayerHitState : PlayerBaseState
 
     PlayerController.States _stateEnum = PlayerController.States.Hit;
     bool _isHitting;
-    
+
     private float _yVelocity = 3, _xVelocity = 2;
     private float _gravity = -12;
 
@@ -40,7 +40,9 @@ public class PlayerHitState : PlayerBaseState
         if (_controller.HitObject.tag == "Bullet")
             _controller.HitObject.gameObject.SetActive(false);
 
-        _controller.Animator.SetTrigger("HitTrigger");
+        Debug.Log("WHY");
+        _controller.Animator.SetTrigger("JumpTrigger");
+        _controller.Animator.SetBool("OnGround", false);
 
         int directionX = _controller.transform.position.x - _controller.HitObject.transform.position.x >= 0 ? 1 : -1;
         _controller.StartJump(directionX);
@@ -49,10 +51,15 @@ public class PlayerHitState : PlayerBaseState
     void CheckGround()
     {
         if (_controller.IsOnGround() && _controller.CanCheckGround)
+        {
             _player.SwitchState(_controller.GroundRootState);
+            _controller.Animator.SetBool("OnGround", true);
+        }
     }
     public override void ExitState()
     {
+
+        _controller.Animator.SetBool("OnGround", true);
         _isHitting = false;
     }
 

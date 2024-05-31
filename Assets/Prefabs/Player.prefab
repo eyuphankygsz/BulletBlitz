@@ -474,6 +474,9 @@ MonoBehaviour:
   - {fileID: 4767595321612378185}
   _defaultHitCooldownTime: 3
   WeaponParent: {fileID: 2660881759525661634}
+  _metalSounds:
+  - {fileID: 8300000, guid: 4cd59570778dd524baab7d16f43ecea3, type: 3}
+  - {fileID: 8300000, guid: ae59cc56406e00a40aee6519f935c8c1, type: 3}
 --- !u!114 &6902789354317306101
 MonoBehaviour:
   m_ObjectHideFlags: 0

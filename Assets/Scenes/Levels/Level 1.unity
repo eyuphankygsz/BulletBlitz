@@ -38067,6 +38067,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: 
+  _events:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &577286528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41527,9 +41530,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 276620089549480143, guid: 8c89acc754345b24a8a50a810e5f7409, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4183946604525681407, guid: 8c89acc754345b24a8a50a810e5f7409, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4255792696456182192, guid: 8c89acc754345b24a8a50a810e5f7409, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7012040500954092544, guid: 8c89acc754345b24a8a50a810e5f7409, type: 3}
       propertyPath: m_LocalPosition.x

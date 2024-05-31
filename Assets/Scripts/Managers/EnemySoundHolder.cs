@@ -8,7 +8,6 @@ public class EnemySoundHolder : MonoBehaviour
 {
     public static EnemySoundHolder Instance;
     private List<AudioSource> _sources;
-    private AudioSource _bgm;
     private int _sourceCounter, _maxSource = 10;
 
     [SerializeField] private SFXDictionary sfxDictionary;
@@ -107,13 +106,6 @@ public class EnemySoundHolder : MonoBehaviour
             _sources.Add(source);
         }
         _sourceCounter = 0;
-
-        _bgm = gameObject.AddComponent<AudioSource>();
-        _bgm.clip = _backgroundMusic;
-        _bgm.loop = true;
-        _bgm.volume = 0.5f;
-        _bgm.outputAudioMixerGroup = GameMixer.FindMatchingGroups("Music")[0];
-        _bgm.Play();
     }
 
     public void CreateSFXLists()

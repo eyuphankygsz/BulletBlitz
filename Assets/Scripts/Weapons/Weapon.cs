@@ -11,4 +11,8 @@ public class Weapon : MonoBehaviour
     {
         _autoShooter.Shoot();
     }
+    private void PlayAudio()
+    {
+        AudioManager.PlayAudio(WeaponStatSO.ShootSFX);
+    }
 }

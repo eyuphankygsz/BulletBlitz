@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 2119100665415746411}
   m_Layer: 7
   m_Name: Enemy_Ghost
-  m_TagString: Crow
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,6 +149,7 @@ MonoBehaviour:
   MaxX: 68.91
   MinY: 17.45
   MaxY: 24.2
+  _deadEvents: []
 --- !u!114 &7945565727887860519
 MonoBehaviour:
   m_ObjectHideFlags: 0

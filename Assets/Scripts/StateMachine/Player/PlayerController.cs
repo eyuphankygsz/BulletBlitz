@@ -452,4 +452,11 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_interactableCheck.position + (Vector3.up * _interactableCheckOffset), _interactableCheckSize);
     }
+
+    [SerializeField] private AudioClip[] _metalSounds;
+    private int _metalSoundsCounter;
+    public void WalkSound()
+    {
+        AudioManager.PlayAudio(_metalSounds[_metalSoundsCounter++ % _metalSounds.Length]);
+    }
 }

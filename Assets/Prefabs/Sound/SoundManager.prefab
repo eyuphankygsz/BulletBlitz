@@ -46,11 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxDictionary:
     _sfxLists:
-    - Name: Goat
+    - Name: Drago
       SfxList: {fileID: 296926918289072255, guid: b659a9b7c6c27894a8a0416f529e1ed3, type: 3}
     - Name: Kid
       SfxList: {fileID: 627836348639621005, guid: c9f26b89ffeb9c2488d648bbbc8392c7, type: 3}
-    - Name: Crow
+    - Name: Ghost
       SfxList: {fileID: 6859302747861528919, guid: edf94befd5622f648b3816023bac5134, type: 3}
     - Name: Witch
       SfxList: {fileID: 6859302747861528919, guid: 55a4cdcb5479fe04ba1861a70a453989, type: 3}

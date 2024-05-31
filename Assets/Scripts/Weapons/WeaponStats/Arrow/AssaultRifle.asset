@@ -30,3 +30,4 @@ MonoBehaviour:
   _baseMaxBullet: 14
   _baseAdditionalHealth: 10
   _baseReloadTime: 3
+  ShootSFX: {fileID: 8300000, guid: 80517269b0078a944b241c72dee285c9, type: 3}

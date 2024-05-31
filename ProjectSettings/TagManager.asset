@@ -12,8 +12,6 @@ TagManager:
   - JumpButton
   - Frame
   - Kid
-  - Goat
-  - Crow
   - HealthBar
   - UpgradeCanvas
   - SkillBar
@@ -24,6 +22,9 @@ TagManager:
   - InteractButton
   - CorruptedSilver
   - Sticked
+  - Button
+  - Ghost
+  - Drago
   layers:
   - Default
   - TransparentFX

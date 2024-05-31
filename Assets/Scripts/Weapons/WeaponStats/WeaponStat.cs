@@ -30,6 +30,7 @@ public class WeaponStat : ScriptableObject
     [SerializeField] private int _baseAdditionalHealth;
     [SerializeField] private float _baseReloadTime;
 
+    public AudioClip ShootSFX;
 
 
     public void SetupGun()
