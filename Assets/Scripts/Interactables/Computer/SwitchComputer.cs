@@ -25,7 +25,11 @@ public sealed class SwitchComputer : ComputerBehaviorBase
             AudioManager.PlayAudio(_lockedSFX);
             return;
         }
-        _enabled = !_enabled;
+        if (!_bothWayEvents)
+            _enabled = !_enabled;
+        else
+            _enabled = true;
+
         AudioManager.PlayAudio(_enabled ? _activeSFX : _deactiveSFX);
         ComputerSettings(_enabled);
         for (int i = 0; i < _activateEvents.Length; i++)

@@ -58899,6 +58899,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: 
+  _events:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &562998210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65387,7 +65390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
       propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
       propertyPath: _activateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -65402,7 +65405,15 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
+      propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
       propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1419242785}
+    - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
+      propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1419242785}
     - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
@@ -65414,7 +65425,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
+      propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
       propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CertainBehaviour
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
+      propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: ComputerLock
       objectReference: {fileID: 0}
     - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
@@ -65426,11 +65445,23 @@ PrefabInstance:
       value: SwitchComputer, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
+      propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SwitchComputer, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
       propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
+      propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
       propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4627635433798779573, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
+      propertyPath: _deactivateEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7530191308276115554, guid: 9057e88d8221fdb4d9d6f1b2060e9c4f, type: 3}
