@@ -23579,10 +23579,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4233578605413858526, guid: cc732d74d50ffe44cb1dec3c769c24e6, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7636446821476314793, guid: cc732d74d50ffe44cb1dec3c769c24e6, type: 3}
       propertyPath: m_Name
       value: PanelManager
