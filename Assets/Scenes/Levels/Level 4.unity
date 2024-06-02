@@ -43474,7 +43474,7 @@ Transform:
   m_GameObject: {fileID: 557948228}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 64.75, y: 19.63, z: 0}
+  m_LocalPosition: {x: 64.21, y: 19.63, z: 0}
   m_LocalScale: {x: 2.4938, y: 0.99440277, z: 2.4938}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43493,6 +43493,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneName: 
+  _events:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &618439542
 PrefabInstance:
   m_ObjectHideFlags: 0
